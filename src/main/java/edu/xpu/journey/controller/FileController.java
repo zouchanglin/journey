@@ -1,7 +1,7 @@
 package edu.xpu.journey.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import edu.xpu.journey.FileUpLoadConfig;
+import edu.xpu.journey.config.FileUpLoadConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -62,7 +62,6 @@ public class FileController {
             return saveResult.toJSONString();
         }
     }
-
 
     private ResponseEntity<FileSystemResource> export(File file) {
         if (file == null) {
