@@ -1,6 +1,3 @@
-# SQL设计
-
-```sql
 /*
  Navicat Premium Data Transfer
 
@@ -103,5 +100,3 @@ CREATE TABLE `tag_info`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
-```
-
