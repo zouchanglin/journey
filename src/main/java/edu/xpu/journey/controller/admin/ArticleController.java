@@ -4,6 +4,9 @@ import edu.xpu.journey.convert.ArticleInfoConvert;
 import edu.xpu.journey.entity.ArticleInfo;
 import edu.xpu.journey.enums.ArticleStatusEnum;
 import edu.xpu.journey.service.ArticleService;
+import edu.xpu.journey.service.CategoryService;
+import edu.xpu.journey.service.TagService;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +22,10 @@ import java.util.Map;
 public class ArticleController {
     @Autowired
     private ArticleService articleService;
-
+    @Autowired
+    private CategoryService categoryService;
+    @Autowired
+    private TagService tagService;
     @Autowired
     private ArticleInfoConvert articleInfoConvert;
 
@@ -39,6 +45,9 @@ public class ArticleController {
                                 Map<String, Object> map){
         ArticleInfo articleInfo = articleService.getArticleById(articleId);
         map.put("article", articleInfoConvert.articleToStr(articleInfo));
+        map.put("category", categoryService.getAll());
+        map.put("checkedTag", tagService.getArticleTag(articleId));
+        map.put("allTag", tagService.getAllTags());
         return "admin/editArticle";
     }
 

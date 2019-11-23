@@ -10,6 +10,5 @@ import lombok.Data;
 public class TagInfo {
 	private Integer id;
 	private String name;
-	private int category;
-	private int amount;
+	private Integer amount;
 }

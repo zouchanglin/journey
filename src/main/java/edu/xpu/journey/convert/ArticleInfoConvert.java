@@ -12,9 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -48,14 +50,9 @@ public class ArticleInfoConvert {
         findResult.ifPresent(categoryInfo -> articleInfoShow.setCategoryStr(categoryInfo.getMyname()));
 
         //查询标签字符串
-        List<TagInfo> tagList = tagInfoMapper.findByCategory(categoryId);
-        int size = tagList.size();
-        String[] arr = new String[size];
-        for (int i = 0; i < size; i++) {
-            arr[i] = tagList.get(i).getName();
-        }
-
-        articleInfoShow.setTagArrayStr(arr);
+        List<TagInfo> articleTags = tagInfoMapper.findArticleTags(articleInfo.getId());
+        List<String> tagNames=articleTags.stream().map(TagInfo::getName).collect(Collectors.toList());
+        articleInfoShow.setTagArrayStr(tagNames);
         log.info("[ArticleInfoConvert] articleToStr() articleInfoShow={}", articleInfoShow);
         return articleInfoShow;
     }

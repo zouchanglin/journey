@@ -1,6 +1,5 @@
 package edu.xpu.journey.entity.mapper;
 
-import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.HashMap;
@@ -24,12 +23,18 @@ import lombok.extern.slf4j.Slf4j;
 public class TagInfoMapperTest {
 	@Autowired
 	private TagInfoMapper mapper;
-	
+
+
+	@Test
+	public void findArticleTags(){
+		List<TagInfo> articleTags = mapper.findArticleTags(8);
+		assertEquals(0, articleTags.size());
+	}
+
 	@Test
 	public void insertByMap() {
 		Map<String, Object> map = new HashMap<>();
 		map.put("name", "AAA");
-		map.put("category", 0);
 		map.put("amount", 0);
 		int insertByMap = mapper.insertByMap(map);
 		assertEquals(insertByMap, 1);
@@ -40,23 +45,15 @@ public class TagInfoMapperTest {
 	public void insertByObject() {
 		TagInfo tagInfo = new TagInfo();
 		tagInfo.setName("BBB");
-		tagInfo.setCategory(1);
 		tagInfo.setAmount(1);
 		
 		int insertByMap = mapper.insertByObject(tagInfo);
 		assertEquals(insertByMap, 1);
 	}
-	
-	
-	@Test
-	public void findByCategory() {
-		List<TagInfo> result = mapper.findByCategory(0);
-		assertNotNull(result);
-	}
 
 	@Test
 	public void updateTagInfo(){
-		int updateResult = mapper.updateTagInfo("DDD", 2, 2, 4);
+		int updateResult = mapper.updateTagInfo("DDD",2, 4);
 		assertEquals(1, updateResult);
 	}
 
@@ -65,7 +62,6 @@ public class TagInfoMapperTest {
 		TagInfo tagInfo = new TagInfo();
 		tagInfo.setId(4);
 		tagInfo.setName("EEE");
-		tagInfo.setCategory(5);
 		tagInfo.setAmount(5);
 		int updateResult = mapper.updateTagInfoByObject(tagInfo);
 		assertEquals(1, updateResult);
