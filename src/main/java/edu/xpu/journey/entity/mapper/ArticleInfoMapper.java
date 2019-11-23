@@ -21,6 +21,14 @@ public interface ArticleInfoMapper {
     List<ArticleInfo> findAllByStatus(Integer status);
 
     /**
+     * 根据文章编号查找文章
+     * @param id 文章编号
+     * @return 文章对象
+     */
+    @Select("select * from article_info where id=#{id}")
+    ArticleInfo findOneById(Integer id);
+
+    /**
      * 根据状态分页查询
      * @param status 文章的状态
      * @param start 起始位置
@@ -60,6 +68,15 @@ public interface ArticleInfoMapper {
      */
     @Update("update article_info set reading=#{reading} where id=#{id}")
     int updateArticleReading(Integer reading, Integer id);
+
+    /**
+     * 更改文章状态
+     * @param status 目标状态
+     * @param id 文章编号
+     * @return 更改结果
+     */
+    @Update("update article_info set status=#{status} where id=#{id}")
+    int updateArticleStatus(Integer status, Integer id);
 
     /**
      * 插入一篇文章
