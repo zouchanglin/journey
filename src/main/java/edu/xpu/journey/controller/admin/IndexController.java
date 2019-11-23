@@ -1,9 +1,10 @@
 package edu.xpu.journey.controller.admin;
 
+import edu.xpu.journey.convert.ArticleInfoConvert;
 import edu.xpu.journey.entity.ArticleInfo;
 import edu.xpu.journey.enums.ArticleStatusEnum;
 import edu.xpu.journey.service.ArticleService;
-import edu.xpu.journey.show.StrArticleInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,11 +16,12 @@ import java.util.Map;
 @Controller
 @RequestMapping("/admin")
 public class IndexController {
-    private final ArticleService articleService;
+    @Autowired
+    private ArticleService articleService;
 
-    public IndexController(ArticleService articleService) {
-        this.articleService = articleService;
-    }
+   
+    @Autowired
+    private ArticleInfoConvert articleInfoConvert;
 
     /**
      * 后台管理首页
@@ -37,12 +39,8 @@ public class IndexController {
     @GetMapping("/blog_list")
     public String blogList(@RequestParam(required = false, defaultValue = "0") Integer pageIndex,
                            Map<String, Object> map){
-        List<ArticleInfo> debugList = articleService.getPageArticleList(ArticleStatusEnum.DEBUG.getCode(), pageIndex, 10);
-        map.put("debugList", StrArticleInfo.convert(debugList));
         List<ArticleInfo> releaseList = articleService.getPageArticleList(ArticleStatusEnum.RELEASE.getCode(), pageIndex, 10);
-        map.put("releaseList", StrArticleInfo.convert(releaseList));
-        List<ArticleInfo> deleteList = articleService.getPageArticleList(ArticleStatusEnum.DELETE.getCode(), pageIndex, 10);
-        map.put("deleteList", StrArticleInfo.convert(deleteList));
+        map.put("releaseList", articleInfoConvert.convertList(releaseList));
         return "admin/blogList";
     }
 
