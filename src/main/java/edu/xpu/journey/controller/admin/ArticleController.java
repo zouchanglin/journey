@@ -2,11 +2,12 @@ package edu.xpu.journey.controller.admin;
 
 import edu.xpu.journey.convert.ArticleInfoConvert;
 import edu.xpu.journey.entity.ArticleInfo;
+import edu.xpu.journey.entity.TagInfo;
 import edu.xpu.journey.enums.ArticleStatusEnum;
 import edu.xpu.journey.service.ArticleService;
 import edu.xpu.journey.service.CategoryService;
 import edu.xpu.journey.service.TagService;
-import org.checkerframework.checker.units.qual.A;
+import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -46,8 +48,18 @@ public class ArticleController {
         ArticleInfo articleInfo = articleService.getArticleById(articleId);
         map.put("article", articleInfoConvert.articleToStr(articleInfo));
         map.put("category", categoryService.getAll());
-        map.put("checkedTag", tagService.getArticleTag(articleId));
-        map.put("allTag", tagService.getAllTags());
+
+        List<TagInfo> articleTag = tagService.getArticleTag(articleId);
+        List<TagInfo> allTags = tagService.getAllTags();
+        map.put("checkedTag", articleTag);
+
+        HashSet<TagInfo> h1 = new HashSet<>(allTags);
+        HashSet<TagInfo> h2 = new HashSet<>(articleTag);
+        h1.removeAll(h2);
+        List<TagInfo> surplus = Lists.newArrayList();
+        surplus.addAll(h1);
+
+        map.put("uncheckedTag", surplus);
         return "admin/editArticle";
     }
 

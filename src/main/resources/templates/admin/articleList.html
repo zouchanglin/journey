@@ -46,7 +46,7 @@
 				<div class="col-md-12 column">
 					<table class="table table-bordered">
 						<thead>
-							<tr class="warning">
+							<tr class="success">
 								<th>标题</th>
 								<th>创建时间</th>
 								<th>阅读量</th>
@@ -65,12 +65,10 @@
 								<td th:text="${article.articleInfo.discuss}">Discuss</td>
 								<td th:text="${article.categoryStr}">Default</td>
 								<td>
-									<div class="btn-group">
 										<a th:href="@{'/admin/article/edit/'+${article.articleInfo.id}}"
-										   class="btn btn-success">修改</a>
+										   class="btn btn-success btn-sm">修改</a>
 										<a th:href="@{'/admin/article/recycle/'+${article.articleInfo.id}}"
-										   class="btn btn-danger">移至草稿箱</a>
-									</div>
+										   class="btn btn-danger btn-sm">移至草稿箱</a>
 								</td>
 							</tr>
 						</tbody>
