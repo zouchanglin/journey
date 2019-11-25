@@ -39,7 +39,7 @@
                 <div class="form-group">
                     <input type="text" id="title" name="title" class="form-control" placeholder="博客标题(1-100)"
                            style="width: 700px" th:value="${article.articleInfo.tittle}"/><!-- 700px -->
-                    <input id="blogid" type="text" style="display: none" th:value="${article.articleInfo.id}">
+                    <input id="myid" type="text" style="display: none" th:value="${article.articleInfo.id}">
                 </div>
             </form>
         </div>
@@ -146,23 +146,16 @@
     document.getElementById("submit").onclick = contentRelease;
 
     //标签取消选择
-
     function uncheckedTag(btn) {
         btn.remove();
-        btn.onclick = function () {
-            checkedTag(this);
-        };
+        btn.onclick = function () { checkedTag(this); };
         document.getElementById('allTags').appendChild(btn);
-        //TODO 移除队列标签
     }
     //标签确定选择
     function checkedTag(btn) {
         btn.remove();
-        btn.onclick = function () {
-            uncheckedTag(this);
-        };
+        btn.onclick = function () { uncheckedTag(this); };
         document.getElementById('selectedTag').appendChild(btn);
-        //TODO 加入队列标签
     }
 
     //发布博客
@@ -180,7 +173,7 @@
         }
 
         $.post({
-            url: "/blog/release",
+            url: "/admin/article/release",
             data: {"blogId": blogid,
                    "blogTitle":title,
                    "blogSummary":summary,

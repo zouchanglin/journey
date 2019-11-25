@@ -3,11 +3,9 @@ package edu.xpu.journey.service.impl;
 import edu.xpu.journey.entity.TagInfo;
 import edu.xpu.journey.entity.mapper.TagInfoMapper;
 import edu.xpu.journey.service.TagService;
-import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -27,11 +25,13 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public List<TagInfo> getOtherTags(Integer article) {
-        HashSet<TagInfo> h1 = new HashSet<>(tagInfoMapper.getAllTags());
-        HashSet<TagInfo> h2 = new HashSet<>(tagInfoMapper.findArticleTags(article));
-        h1.removeAll(h2);
-        List<TagInfo> surplus = Lists.newArrayList();
-        surplus.addAll(h1);
-        return surplus;
+          //原来的查找方式
+//        HashSet<TagInfo> h1 = new HashSet<>(tagInfoMapper.getAllTags());
+//        HashSet<TagInfo> h2 = new HashSet<>(tagInfoMapper.findArticleTags(article));
+//        h1.removeAll(h2);
+//        List<TagInfo> surplus = Lists.newArrayList();
+//        surplus.addAll(h1);
+//        return surplus;
+        return tagInfoMapper.getAllTagsExcludeArticle(article);
     }
 }

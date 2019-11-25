@@ -2,20 +2,14 @@ package edu.xpu.journey.controller.admin;
 
 import edu.xpu.journey.convert.ArticleInfoConvert;
 import edu.xpu.journey.entity.ArticleInfo;
-import edu.xpu.journey.entity.TagInfo;
 import edu.xpu.journey.enums.ArticleStatusEnum;
 import edu.xpu.journey.service.ArticleService;
 import edu.xpu.journey.service.CategoryService;
 import edu.xpu.journey.service.TagService;
-import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -64,4 +58,10 @@ public class ArticleController {
         map.put("releaseList", articleInfoConvert.convertList(releaseList));
         return "admin/articleList";
     }
+
+    @PostMapping("/release")
+    public String releaseArticle(){
+        return null;
+    }
+
 }

@@ -35,6 +35,8 @@ public interface TagInfoMapper {
 	@Insert("insert into tag_info(name, amount) values (#{name, jdbcType=VARCHAR}, #{amount, jdbcType=INTEGER})")
 	int insertByMap(Map<String, Object> map);
 
+	@Select("select a.id, a.name, a.amount from tag_info a left join (select * from article_tag where article = #{article}) b on a.id=b.tag where b.tag is null;")
+	List<TagInfo> getAllTagsExcludeArticle(Integer article);
 	/**
 	 * 对象形式插入一条标签信息
 	 * @param tagInfo 需要存储的对象

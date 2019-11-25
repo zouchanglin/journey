@@ -26,6 +26,11 @@ public class TagInfoMapperTest {
 
 
 	@Test
+	public void getAllTagsExcludeArticle(){
+		List<TagInfo> excludeArticle = mapper.getAllTagsExcludeArticle(1);
+		assertEquals(4, excludeArticle.size());
+	}
+	@Test
 	public void findArticleTags(){
 		List<TagInfo> articleTags = mapper.findArticleTags(8);
 		assertEquals(0, articleTags.size());
