@@ -27,4 +27,6 @@ public interface TagService {
      * @return 标签集合
      */
     List<TagInfo> getOtherTags(Integer article);
+
+    void setTagsForArticle(Integer article, String tags);
 }

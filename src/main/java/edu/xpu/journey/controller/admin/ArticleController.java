@@ -3,6 +3,7 @@ package edu.xpu.journey.controller.admin;
 import edu.xpu.journey.convert.ArticleInfoConvert;
 import edu.xpu.journey.entity.ArticleInfo;
 import edu.xpu.journey.enums.ArticleStatusEnum;
+import edu.xpu.journey.form.ArticleFrom;
 import edu.xpu.journey.service.ArticleService;
 import edu.xpu.journey.service.CategoryService;
 import edu.xpu.journey.service.TagService;
@@ -59,9 +60,11 @@ public class ArticleController {
         return "admin/articleList";
     }
 
+    @ResponseBody
     @PostMapping("/release")
-    public String releaseArticle(){
-        return null;
+    public String releaseArticle(Integer id, ArticleFrom articleFrom){
+        articleService.releaseArticle(id == null ? 0:id, articleFrom);
+        //TODO 返回页面
+        return "http://www.baidu.com";
     }
-
 }

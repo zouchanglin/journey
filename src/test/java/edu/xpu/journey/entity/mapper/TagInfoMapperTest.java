@@ -24,7 +24,15 @@ public class TagInfoMapperTest {
 	@Autowired
 	private TagInfoMapper mapper;
 
-
+	@Test
+	public void findArticleTag(){
+		Integer articleTag = mapper.findArticleTag(1, 8);
+		if(articleTag == null){
+			System.out.println("A");
+		}else{
+			System.out.println("B");
+		}
+	}
 	@Test
 	public void getAllTagsExcludeArticle(){
 		List<TagInfo> excludeArticle = mapper.getAllTagsExcludeArticle(1);

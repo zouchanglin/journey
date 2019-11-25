@@ -52,7 +52,7 @@ public interface ArticleInfoMapper {
      * @return 修改结果
      */
     @Update("update article_info set tittle=#{tittle}, summary=#{summary}, " +
-            "content=#{content}, picture=#{picture}, " +
+            "content=#{content}, " +
             "reading=#{reading}, love=#{love}, " +
             "discuss=#{discuss}, status=#{status}, " +
             "category=#{category}, creatime=#{creatime}, updatime=#{updatime} " +
@@ -86,7 +86,7 @@ public interface ArticleInfoMapper {
     @Insert("insert into article_info(tittle, summary, content, picture, reading, " +
             "love, discuss, status, category, creatime, updatime) values (" +
             "#{tittle, jdbcType=VARCHAR}, #{summary, jdbcType=VARCHAR}," +
-            "#{content, jdbcType=LONGVARCHAR}, #{picture, jdbcType=VARCHAR}," +
+            "#{content, jdbcType=LONGVARCHAR}, " +
             "#{reading, jdbcType=INTEGER}, #{love, jdbcType=INTEGER}," +
             "#{discuss, jdbcType=INTEGER}, #{status, jdbcType=TINYINT}," +
             "#{category, jdbcType=INTEGER}, #{creatime, jdbcType=BIGINT}, #{updatime, jdbcType=BIGINT}) ")

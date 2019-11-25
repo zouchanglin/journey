@@ -37,9 +37,9 @@
             </ul>
             <form class="navbar-form navbar-left" role="search">
                 <div class="form-group">
-                    <input type="text" id="title" name="title" class="form-control" placeholder="博客标题(1-100)"
+                    <input type="text" id="tittle" name="title" class="form-control" placeholder="博客标题(1-100)"
                            style="width: 700px" th:value="${article.articleInfo.tittle}"/><!-- 700px -->
-                    <input id="myid" type="text" style="display: none" th:value="${article.articleInfo.id}">
+                    <input id="id" type="text" style="display: none" th:value="${article.articleInfo.id}">
                 </div>
             </form>
         </div>
@@ -77,9 +77,10 @@
                         <label class="col-sm-2 control-label">选择分类</label>
                         <div class="col-sm-10" style="margin: 0">
                             <label for="category"></label>
-                            <select id="category" name="" style="width: 40%; height: 40px;" th:selected="${article.articleInfo.category}">
+                            <select id="category" name="" style="width: 40%; height: 40px;">
                                 　　<option th:each="cate:${category}"
                                            th:value="${cate.id}"
+                                           th:selected="${article.articleInfo.category == cate.id}"
                                            th:text="${cate.myname}" style="border-radius: initial"></option>
                             </select>
                         </div>
@@ -88,7 +89,7 @@
                         <label class="col-sm-2 control-label">已选标签</label>
                         <div class="col-sm-10" style="margin: 0" id="selectedTag">
                             <!-- 先打上Id标记此标签 -->
-                            <button th:id="'checkedtag' + ${onetag.id}"
+                            <button th:id="${onetag.id}"
                                     th:each="onetag:${checkedTag}" th:value="${onetag.id}"
                                     th:text="${onetag.name}" type="button"  style="margin-top: 8px;
                                     margin-left: 8px" class="btn btn-default"
@@ -98,7 +99,8 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">其他标签</label>
                         <div class="col-sm-10" style="margin: 0" id="allTags">
-                            <button th:each="onetag:${uncheckedTag}"
+                            <button th:id="${onetag.id}"
+                                    th:each="onetag:${uncheckedTag}"
                                     th:value="${onetag.id}"
                                     th:text="${onetag.name}" type="button"
                                     style="margin-top: 8px; margin-left: 8px"
@@ -160,13 +162,19 @@
 
     //发布博客
     function contentRelease(){
-        var blogid = $("#blogid").val();
-        var title = $("#title").val();
+
+        var buttonList = document.getElementById('selectedTag').getElementsByTagName('button');
+        var tagString = '';
+        for (var i = 0; i < buttonList.length; i++) {
+            tagString += buttonList[i].getAttribute('id')+' ';
+        }
+
+        var id = $("#id").val();
+        var tittle = $("#tittle").val();
         var content = $("#content").val();
         var summary = $("#summary").val();
         var category = $("#category").val();
-        var user_category = $("#user_category").val();
-        var original = $("#original").val();
+
 
         if(summary == null) {
             summary = "仗剑天涯，从你的摘要开始";
@@ -174,12 +182,12 @@
 
         $.post({
             url: "/admin/article/release",
-            data: {"blogId": blogid,
-                   "blogTitle":title,
-                   "blogSummary":summary,
-                   "blogContent":content,
-                   "blogCategory":category,
-                   "blogOriginal":original},
+            data: {"id":id,
+                   "tittle":tittle,
+                   "summary":summary,
+                   "content":content,
+                   "category":category,
+                   "tags":tagString},
             success:function (data) {
                 console.log("发布成功 data = " + data);
                 window.location.href = data;

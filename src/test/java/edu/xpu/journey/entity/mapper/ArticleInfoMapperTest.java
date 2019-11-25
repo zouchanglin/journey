@@ -38,7 +38,7 @@ public class ArticleInfoMapperTest {
         articleInfo.setTittle("CCC");
         articleInfo.setSummary("CCC");
         articleInfo.setContent("CCC");
-        articleInfo.setPicture("CCC");
+        //articleInfo.setPicture("CCC");
         articleInfo.setCategory(0);
         articleInfo.setDiscuss(0);
         articleInfo.setReading(120);
@@ -59,7 +59,7 @@ public class ArticleInfoMapperTest {
         articleInfo.setTittle("CCC");
         articleInfo.setSummary("BBB");
         articleInfo.setContent("CCC");
-        articleInfo.setPicture("DDD");
+        //articleInfo.setPicture("DDD");
         articleInfo.setCategory(0);
         articleInfo.setDiscuss(0);
         articleInfo.setReading(0);

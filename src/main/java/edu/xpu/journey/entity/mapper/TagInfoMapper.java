@@ -35,8 +35,14 @@ public interface TagInfoMapper {
 	@Insert("insert into tag_info(name, amount) values (#{name, jdbcType=VARCHAR}, #{amount, jdbcType=INTEGER})")
 	int insertByMap(Map<String, Object> map);
 
+	/**
+	 * 获取不包含此篇文章的标签
+	 * @param article 文章编号
+	 * @return 标签列表
+	 */
 	@Select("select a.id, a.name, a.amount from tag_info a left join (select * from article_tag where article = #{article}) b on a.id=b.tag where b.tag is null;")
 	List<TagInfo> getAllTagsExcludeArticle(Integer article);
+
 	/**
 	 * 对象形式插入一条标签信息
 	 * @param tagInfo 需要存储的对象
@@ -63,6 +69,28 @@ public interface TagInfoMapper {
 	@Update("update tag_info set name=#{name}, amount=#{amount} where id=#{id}")
 	int updateTagInfoByObject(TagInfo tagInfo);
 
+	/**
+	 * 删除一条标签
+	 * @param id 标签编号
+	 * @return 删除结果
+	 */
 	@Delete("delete from tag_info where id=#{id}")
 	int deleteTagInfo(Integer id);
+
+
+	//更新一条记录（文章+标签）
+	@Update("update article_tag set article=#{article}, tag=#{tag} where id=#{id}")
+	int updateArticleTag(Integer id, Integer article, Integer tag);
+
+	@Insert("insert into article_tag(article, tag) values (#{article, jdbcType=INTEGER}, #{tag, jdbcType=INTEGER})")
+	void addArticleTag(Integer article, Integer tag);
+
+	@Select("select id from article_tag where article = #{article} and tag = #{tag}")
+	Integer findArticleTag(Integer article, Integer tag);
+
+	@Select("select id from article_tag where article = #{article}")
+	List<Integer> findArticleTagPlus(Integer article);
+
+	@Delete("delete from article_tag where id=#{id}")
+	void deleteArticleTag(Integer id);
 }

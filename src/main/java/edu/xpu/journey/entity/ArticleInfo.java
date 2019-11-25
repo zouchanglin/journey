@@ -12,7 +12,6 @@ public class ArticleInfo {
     private String tittle;
     private String summary;
     private String content;
-    private String picture;
     private Integer reading;
     private Integer love;
     private Integer discuss;

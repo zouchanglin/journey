@@ -1,9 +1,22 @@
 package edu.xpu.journey.service;
 
 import edu.xpu.journey.entity.ArticleInfo;
+import edu.xpu.journey.form.ArticleFrom;
+
 import java.util.List;
 
+/**
+ * @author 长林
+ */
 public interface ArticleService {
+
+    /**
+     * 发布一篇文章
+     * @param article 文章编号（如果是新文章则传此参数为 0）
+     * @param articleFrom 文章内容
+     * @return 发布成功
+     */
+    Boolean releaseArticle(Integer article, ArticleFrom articleFrom);
 
     /**
      * 根据文章状态进行分页查询
