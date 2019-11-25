@@ -48,18 +48,8 @@ public class ArticleController {
         ArticleInfo articleInfo = articleService.getArticleById(articleId);
         map.put("article", articleInfoConvert.articleToStr(articleInfo));
         map.put("category", categoryService.getAll());
-
-        List<TagInfo> articleTag = tagService.getArticleTag(articleId);
-        List<TagInfo> allTags = tagService.getAllTags();
-        map.put("checkedTag", articleTag);
-
-        HashSet<TagInfo> h1 = new HashSet<>(allTags);
-        HashSet<TagInfo> h2 = new HashSet<>(articleTag);
-        h1.removeAll(h2);
-        List<TagInfo> surplus = Lists.newArrayList();
-        surplus.addAll(h1);
-
-        map.put("uncheckedTag", surplus);
+        map.put("checkedTag", tagService.getArticleTag(articleId));
+        map.put("uncheckedTag", tagService.getOtherTags(articleId));
         return "admin/editArticle";
     }
 

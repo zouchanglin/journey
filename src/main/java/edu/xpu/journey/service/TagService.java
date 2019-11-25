@@ -13,4 +13,6 @@ public interface TagService {
     List<TagInfo> getArticleTag(Integer article);
 
     List<TagInfo> getAllTags();
+
+    List<TagInfo> getOtherTags(Integer article);
 }
