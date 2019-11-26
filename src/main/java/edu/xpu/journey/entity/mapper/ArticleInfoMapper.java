@@ -91,4 +91,8 @@ public interface ArticleInfoMapper {
             "#{discuss, jdbcType=INTEGER}, #{status, jdbcType=TINYINT}," +
             "#{category, jdbcType=INTEGER}, #{creatime, jdbcType=BIGINT}, #{updatime, jdbcType=BIGINT}) ")
     int insertArticleInfo(ArticleInfo articleInfo);
+
+
+    @Select("select count(id) from article_info where status=#{status}")
+    int countArticleByStatus(Integer status);
 }

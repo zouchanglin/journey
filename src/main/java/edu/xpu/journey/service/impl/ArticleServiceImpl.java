@@ -31,9 +31,14 @@ public class ArticleServiceImpl implements ArticleService {
         return articleInfoMapper.findOneById(articleId);
     }
 
+    @Override
+    public Integer getArticleCountByStatus(Integer status) {
+        return articleInfoMapper.countArticleByStatus(status);
+    }
+
     //TODO 事务支持
     @Override
-    public Boolean releaseArticle(Integer article, ArticleFrom articleFrom) {
+    public ArticleInfo releaseArticle(Integer article, ArticleFrom articleFrom) {
         ArticleInfo findArticleInfo = articleInfoMapper.findOneById(article);
 
         ArticleInfo saveArticleInfo = new ArticleInfo();
@@ -42,6 +47,7 @@ public class ArticleServiceImpl implements ArticleService {
         saveArticleInfo.setUpdatime(System.currentTimeMillis());
         //处理 Tags
         tagService.setTagsForArticle(article, articleFrom.getTags());
+        int saveResult = 0;
 
         if(findArticleInfo != null){
             //修改已有文章并发布
@@ -51,9 +57,8 @@ public class ArticleServiceImpl implements ArticleService {
             saveArticleInfo.setDiscuss(findArticleInfo.getDiscuss());
             saveArticleInfo.setCreatime(findArticleInfo.getCreatime());
 
-            int saveResult = articleInfoMapper.updateArticleInfoByObject(saveArticleInfo);
+            saveResult = articleInfoMapper.updateArticleInfoByObject(saveArticleInfo);
             log.info("[ArticleServiceImpl] releaseArticle() saveResult={}", saveResult);
-            return saveResult == 1;
         }else{
             //直接写的新文章发布
             saveArticleInfo.setLove(0);
@@ -61,10 +66,11 @@ public class ArticleServiceImpl implements ArticleService {
             saveArticleInfo.setDiscuss(0);
             saveArticleInfo.setCreatime(System.currentTimeMillis());
 
-            int saveResult = articleInfoMapper.insertArticleInfo(saveArticleInfo);
+            saveResult = articleInfoMapper.insertArticleInfo(saveArticleInfo);
             log.info("[ArticleServiceImpl] releaseArticle() saveResult={}", saveResult);
-            return saveResult == 1;
         }
+
+        return saveResult == 1 ? saveArticleInfo:null;
     }
 
     @Override

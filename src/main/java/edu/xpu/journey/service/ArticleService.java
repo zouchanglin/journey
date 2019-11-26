@@ -16,7 +16,7 @@ public interface ArticleService {
      * @param articleFrom 文章内容
      * @return 发布成功
      */
-    Boolean releaseArticle(Integer article, ArticleFrom articleFrom);
+    ArticleInfo releaseArticle(Integer article, ArticleFrom articleFrom);
 
     /**
      * 根据文章状态进行分页查询
@@ -39,4 +39,11 @@ public interface ArticleService {
      * @return 文章对象
      */
     ArticleInfo getArticleById(Integer articleId);
+
+    /**
+     * 根据文章状态查询文章数目
+     * @param status 文章状态
+     * @return 文章数目
+     */
+    Integer getArticleCountByStatus(Integer status);
 }
