@@ -33,16 +33,17 @@ public class ArticleInfoMapperTest {
 
     @Test
     public void updateArticleInfoByObject(){
+
         ArticleInfo articleInfo = new ArticleInfo();
         articleInfo.setId(4);
         articleInfo.setTittle("CCC");
         articleInfo.setSummary("CCC");
         articleInfo.setContent("CCC");
-        //articleInfo.setPicture("CCC");
+
         articleInfo.setCategory(0);
-        articleInfo.setDiscuss(0);
-        articleInfo.setReading(120);
-        articleInfo.setLove(0);
+        articleInfo.setDiscuss((int)(Math.random() * 100));
+        articleInfo.setReading((int)(Math.random() * 100));
+        articleInfo.setLove((int)(Math.random() * 100));
         articleInfo.setStatus(0);
         articleInfo.setCreatime(System.currentTimeMillis());
         articleInfo.setUpdatime(System.currentTimeMillis());
@@ -54,22 +55,22 @@ public class ArticleInfoMapperTest {
 
     @Test
     public void insertArticleInfo(){
-        ArticleInfo articleInfo = new ArticleInfo();
-        //articleInfo.setId(1);
-        articleInfo.setTittle("CCC");
-        articleInfo.setSummary("BBB");
-        articleInfo.setContent("CCC");
-        //articleInfo.setPicture("DDD");
-        articleInfo.setCategory(0);
-        articleInfo.setDiscuss(0);
-        articleInfo.setReading(0);
-        articleInfo.setLove(0);
-        articleInfo.setStatus(0);
-        articleInfo.setCreatime(System.currentTimeMillis());
-        articleInfo.setUpdatime(System.currentTimeMillis());
+        for (int i = 0; i < 60; i++) {
+            ArticleInfo articleInfo = new ArticleInfo();
+            articleInfo.setTittle("Tittle"+i);
+            articleInfo.setSummary("Summary"+i);
+            articleInfo.setContent("Content"+i);
+            articleInfo.setCategory(i % 6 + 1);
+            articleInfo.setDiscuss(i);
+            articleInfo.setReading(i);
+            articleInfo.setLove(i);
+            articleInfo.setStatus(i % 2 + 1);
+            articleInfo.setCreatime(System.currentTimeMillis());
+            articleInfo.setUpdatime(System.currentTimeMillis());
+            int result = mapper.insertArticleInfo(articleInfo);
+            assertEquals(1, result);
+        }
 
-        int result = mapper.insertArticleInfo(articleInfo);
-        assertEquals(1, result);
     }
 
     @Test

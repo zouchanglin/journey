@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ import java.util.List;
 @Service
 @Slf4j
 public class ArticleServiceImpl implements ArticleService {
+
 
     @Autowired
     private ArticleInfoMapper articleInfoMapper;
@@ -36,14 +38,35 @@ public class ArticleServiceImpl implements ArticleService {
         return articleInfoMapper.countArticleByStatus(status);
     }
 
-    //TODO 事务支持
+    @Transactional
+    @Override
+    public ArticleInfo saveManuscript(Integer article, ArticleFrom articleFrom) {
+        return saveArticleInfo(article, articleFrom, ArticleStatusEnum.DEBUG.getCode());
+    }
+
+    @Transactional
     @Override
     public ArticleInfo releaseArticle(Integer article, ArticleFrom articleFrom) {
-        ArticleInfo findArticleInfo = articleInfoMapper.findOneById(article);
+        return saveArticleInfo(article, articleFrom, ArticleStatusEnum.RELEASE.getCode());
+    }
 
+    @Override
+    public List<ArticleInfo> getPageArticleList(Integer status, Integer page, Integer pageSize) {
+        Integer start = page * pageSize;
+        return articleInfoMapper.findPageByStatus(status, start, pageSize);
+    }
+
+    @Override
+    public void articleToRecycle(Integer articleId) {
+        int updateResult = articleInfoMapper.updateArticleStatus(ArticleStatusEnum.DELETE.getCode(), articleId);
+        log.info("[ArticleServiceImpl] articleToRecycle updateResult={}", updateResult);
+    }
+
+    private ArticleInfo saveArticleInfo(Integer article, ArticleFrom articleFrom, Integer status) {
+        ArticleInfo findArticleInfo = articleInfoMapper.findOneById(article);
         ArticleInfo saveArticleInfo = new ArticleInfo();
         BeanUtils.copyProperties(articleFrom, saveArticleInfo);
-        saveArticleInfo.setStatus(ArticleStatusEnum.RELEASE.getCode());
+        saveArticleInfo.setStatus(status);
         saveArticleInfo.setUpdatime(System.currentTimeMillis());
         //处理 Tags
         tagService.setTagsForArticle(article, articleFrom.getTags());
@@ -74,14 +97,20 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<ArticleInfo> getPageArticleList(Integer status, Integer page, Integer pageSize) {
-        Integer start = page * pageSize;
-        return articleInfoMapper.findPageByStatus(status, start, pageSize);
+    public void articleToManuscript(Integer articleId) {
+        int updateResult = articleInfoMapper.updateArticleStatus(ArticleStatusEnum.DEBUG.getCode(), articleId);
+        log.info("[ArticleServiceImpl] articleToManuscript updateResult={}", updateResult);
     }
 
     @Override
-    public void articleToRecycle(Integer articleId) {
-        int updateResult = articleInfoMapper.updateArticleStatus(ArticleStatusEnum.DELETE.getCode(), articleId);
-        log.info("[ArticleServiceImpl] articleToRecycle updateResult={}", updateResult);
+    public void reallyDelete(Integer article) {
+        articleInfoMapper.deleteArticle(article);
+    }
+
+    @Override
+    public void releaseArticleByManuscript(Integer article) {
+        ArticleInfo articleInfo = articleInfoMapper.findOneById(article);
+        articleInfo.setStatus(ArticleStatusEnum.RELEASE.getCode());
+        articleInfoMapper.updateArticleInfoByObject(articleInfo);
     }
 }

@@ -27,19 +27,19 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <span class="navbar-brand">快来写一篇博客吧！</span>
+            <span class="navbar-brand">博客标题</span>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#" data-toggle="modal" data-target="#myModal">发布博客</a></li>
-                <li><a href="#" onclick="contentSave()">保存草稿</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#myModal2">保存为草稿</a></li>
                 <li><a href="#" onclick="returnIndex()">返回首页</a></li>
             </ul>
             <form class="navbar-form navbar-left" role="search">
                 <div class="form-group">
-                    <input type="text" id="tittle" name="title" class="form-control" placeholder="博客标题(1-100)"
-                           style="width: 700px" th:value="${article.articleInfo.tittle}"/><!-- 700px -->
-                    <input id="id" type="text" style="display: none" th:value="${article.articleInfo.id}">
+                    <label for="tittle"></label><input type="text" id="tittle" name="title" class="form-control" placeholder="博客标题(1-100)"
+                                                       style="width: 700px" th:value="${article.articleInfo.tittle}"/><!-- 700px -->
+                    <label for="id"></label><input id="id" type="text" style="display: none" th:value="${article.articleInfo.id}">
                 </div>
             </form>
         </div>
@@ -119,6 +119,74 @@
     </div>
 </div>
 <!-- 模态框end -->
+<!-- 模态框start -->
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="myModal2">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">保存草稿</h4>
+            </div>
+            <div class="modal-body" style="text-align: left">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="summary" class="col-sm-2 control-label">文章摘要</label>
+                        <div class="col-sm-10">
+                            <label for="summary2">
+                            </label>
+                            <textarea name="form-control" placeholder="好的文章摘要易于检索...(摘要最多150字, 否则会保存失败)"
+                                                                    id="summary2" style="width: 95%;border-radius: 6px; padding: 10px; border-color: #EEEEEE; height: 150px"
+                                                                    th:text="${article.articleInfo.summary}"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">选择分类</label>
+                        <div class="col-sm-10" style="margin: 0">
+                            <label for="category2"></label>
+                            <select id="category2" name="" style="width: 40%; height: 40px;">
+                                　　<option th:each="cate:${category}"
+                                          th:value="${cate.id}"
+                                          th:selected="${article.articleInfo.category == cate.id}"
+                                          th:text="${cate.myname}" style="border-radius: initial"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">已选标签</label>
+                        <div class="col-sm-10" style="margin: 0" id="selectedTag2">
+                            <!-- 先打上Id标记此标签 -->
+                            <button th:id="${onetag.id}"
+                                    th:each="onetag:${checkedTag}" th:value="${onetag.id}"
+                                    th:text="${onetag.name}" type="button"  style="margin-top: 8px;
+                                    margin-left: 8px" class="btn btn-default"
+                                    th:onclick="'javascript:uncheckedTag2(this);'"></button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">其他标签</label>
+                        <div class="col-sm-10" style="margin: 0" id="allTags2">
+                            <button th:id="${onetag.id}"
+                                    th:each="onetag:${uncheckedTag}"
+                                    th:value="${onetag.id}"
+                                    th:text="${onetag.name}" type="button"
+                                    style="margin-top: 8px; margin-left: 8px"
+                                    class="btn btn-default"
+                                    th:onclick="'javascript:checkedTag2(this);'"></button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+                <button type="button" class="btn btn-primary" id="submit2">确认保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 模态框end -->
+
+
 <script th:src="@{/bootstrap/script/jquery-3.4.1.min.js}"
         src="../../static/bootstrap/script/jquery-3.4.1.min.js"></script>
 <script th:src="@{/bootstrap/script/editormd.min.js}"
@@ -146,6 +214,7 @@
     });
 
     document.getElementById("submit").onclick = contentRelease;
+    document.getElementById("submit2").onclick = savedRafts;
 
     //标签取消选择
     function uncheckedTag(btn) {
@@ -160,9 +229,21 @@
         document.getElementById('selectedTag').appendChild(btn);
     }
 
+    //标签取消选择
+    function uncheckedTag2(btn) {
+        btn.remove();
+        btn.onclick = function () { checkedTag2(this); };
+        document.getElementById('allTags2').appendChild(btn);
+    }
+    //标签确定选择
+    function checkedTag2(btn) {
+        btn.remove();
+        btn.onclick = function () { uncheckedTag2(this); };
+        document.getElementById('selectedTag2').appendChild(btn);
+    }
+
     //发布博客
     function contentRelease(){
-
         var buttonList = document.getElementById('selectedTag').getElementsByTagName('button');
         var tagString = '';
         for (var i = 0; i < buttonList.length; i++) {
@@ -174,7 +255,6 @@
         var content = $("#content").val();
         var summary = $("#summary").val();
         var category = $("#category").val();
-
 
         if(summary == null) {
             summary = "仗剑天涯，从你的摘要开始";
@@ -189,7 +269,6 @@
                    "category":category,
                    "tags":tagString},
             success:function (data) {
-                console.log("发布成功 data = " + data);
                 window.location.href = data;
             },
             error:function (data) {
@@ -198,40 +277,46 @@
             }
         });
     }
-    //保存博客
-    function contentSave(){
-        var blogid = $("#blogid").val();
-        var title = $("#title").val();
+    function savedRafts(){
+        var buttonList = document.getElementById('selectedTag2').getElementsByTagName('button');
+        var tagString = '';
+        for (var i = 0; i < buttonList.length; i++) {
+            tagString += buttonList[i].getAttribute('id')+' ';
+        }
+
+        var id = $("#id").val();
+        var tittle = $("#tittle").val();
         var content = $("#content").val();
-        var summary = $("#summary").val();
-        var category = $("#category").val();
-        var user_category = $("#user_category").val();
-        var original = $("#original").val();
+        var summary = $("#summary2").val();
+        var category = $("#category2").val();
+
+        if(summary == null) {
+            summary = "仗剑天涯，从你的摘要开始";
+        }
 
         $.post({
-            url: "/blog/save",
-            data: {"blogId": blogid,
-            "blogTitle":title,
-            "blogContent":content,
-            "blogSummary":summary,
-            "blogCategory":category,
-            "blogOriginal":original},
+            url: "/admin/article/manuscript",
+            data: {"id":id,
+                "tittle":tittle,
+                "summary":summary,
+                "content":content,
+                "category":category,
+                "tags":tagString},
             success:function (data) {
-                console.log("保存成功 data = " + data);
-                //window.location.href = data;
-                alert(data);
+                window.location.href = data;
             },
-            error:function (data) {
-                alert("保存失败,请检查网络！");
+            error:function () {
+                alert("保存失败");
                 console.log("保存失败");
             }
         });
     }
+
     //返回首页
     function returnIndex(){
         var se=confirm('文章未保存, 确定返回首页?');
         if (se === true)
-            window.location.href="/user/center";
+            window.location.href="/admin/center";
     }
 </script>
 </body>

@@ -31,9 +31,32 @@ public class ArticleController {
     @Autowired
     private FileUpLoadConfig fileUpLoadConfig;
 
-    @GetMapping("/recycle/{articleId}")
+
+    //TODO 预览文章
+    @GetMapping("/preview/{articleId}")
+    public String previewArticle(@PathVariable("articleId") String articleId){
+        return "";
+    }
+
+    /**
+     * 把文章移入回收站
+     * @param articleId 文章编号
+     * @return 刷新文章列表
+     */
+    @GetMapping("/torecycle/{articleId}")
     public String articleToRecycle(@PathVariable("articleId") String articleId){
         articleService.articleToRecycle(Integer.parseInt(articleId));
+        return "redirect:/admin/article/list";
+    }
+
+    /**
+     * 把文章移入草稿箱
+     * @param articleId 文章编号
+     * @return 刷新文章列表
+     */
+    @GetMapping("/tomanuscript/{articleId}")
+    public String articleToManuscript(@PathVariable("articleId") String articleId){
+        articleService.articleToManuscript(Integer.parseInt(articleId));
         return "redirect:/admin/article/list";
     }
 
@@ -63,7 +86,7 @@ public class ArticleController {
         //总数
         int totalCount = articleService.getArticleCountByStatus(ArticleStatusEnum.RELEASE.getCode());
         //每页加载数
-        int loadCount = 2;
+        int loadCount = 5;
         //总页数
         int totalPage = (totalCount + loadCount-1) / loadCount;
 
@@ -80,18 +103,59 @@ public class ArticleController {
         return "admin/articleList";
     }
 
+    /**
+     * 发布文章
+     * @param id 文章Id
+     * @param articleFrom 文章表单数据
+     * @return 重新加载页面的地址
+     */
     @ResponseBody
     @PostMapping("/release")
     public String releaseArticle(Integer id, ArticleFrom articleFrom){
-        ArticleInfo articleInfo = articleService.releaseArticle(id == null ? 0 : id, articleFrom);
+        ArticleInfo articleInfo = articleService.releaseArticle((id == null ? 0 : id), articleFrom);
         return fileUpLoadConfig.getBlogUrl()+"/admin/article/released/"+articleInfo.getId();
     }
 
+    /**
+     * 保存文章为草稿
+     * @param id 文章Id
+     * @param articleFrom 文章表单数据
+     * @return 重新加载页面的地址
+     */
+    @ResponseBody
+    @PostMapping("/manuscript")
+    public String saveManuscript(Integer id, ArticleFrom articleFrom){
+        ArticleInfo articleInfo = articleService.saveManuscript((id == null ? 0 : id), articleFrom);
+        return fileUpLoadConfig.getBlogUrl()+"/admin/article/saved/"+articleInfo.getId();
+    }
+
+    /**
+     * 发布文章成功预览地址
+     * @param articleId 文章的Id
+     * @param map 向页面传递的参数
+     * @return 成功页面
+     */
     @GetMapping("/released/{articleId}")
     public String releasedArticle(@PathVariable("articleId") Integer articleId,
                                   Map<String, Object> map){
         ArticleInfo articleInfo = articleService.getArticleById(articleId);
-        map.put("articleInfo", articleInfo);
-        return "admin/releaseSuccess";
+        map.put("articleInfoStr", articleInfoConvert.articleToStr(articleInfo));
+        map.put("tittle", "《" + articleInfo.getTittle() + "》发布成功");
+        return "admin/articleSuccess";
+    }
+
+    /**
+     * 保存文章为草稿成功预览地址
+     * @param articleId 文章的Id
+     * @param map 向页面传递的参数
+     * @return 成功页面
+     */
+    @GetMapping("/saved/{articleId}")
+    public String savedArticle(@PathVariable("articleId") Integer articleId,
+                                  Map<String, Object> map){
+        ArticleInfo articleInfo = articleService.getArticleById(articleId);
+        map.put("articleInfoStr", articleInfoConvert.articleToStr(articleInfo));
+        map.put("tittle", "《" + articleInfo.getTittle() + "》保存成功");
+        return "admin/articleSuccess";
     }
 }

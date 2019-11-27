@@ -46,4 +46,31 @@ public interface ArticleService {
      * @return 文章数目
      */
     Integer getArticleCountByStatus(Integer status);
+
+    /**
+     * 发布
+     * @param article 文章的编号
+     * @param articleFrom 文章内容
+     * @return 保存结果
+     */
+    ArticleInfo saveManuscript(Integer article, ArticleFrom articleFrom);
+
+
+    /**
+     * 把文章移入草稿箱
+     * @param articleId 文章编号
+     */
+    void articleToManuscript(Integer articleId);
+
+    /**
+     * 真正删除文章
+     * @param article 文章编号
+     */
+    void reallyDelete(Integer article);
+
+    /**
+     * 把已经存在的草稿发布
+     * @param article 文章编号
+     */
+    void releaseArticleByManuscript(Integer article);
 }

@@ -83,7 +83,7 @@ public interface ArticleInfoMapper {
      * @param articleInfo 文章对象
      * @return 保存结果
      */
-    @Insert("insert into article_info(tittle, summary, content, picture, reading, " +
+    @Insert("insert into article_info(tittle, summary, content, reading, " +
             "love, discuss, status, category, creatime, updatime) values (" +
             "#{tittle, jdbcType=VARCHAR}, #{summary, jdbcType=VARCHAR}," +
             "#{content, jdbcType=LONGVARCHAR}, " +

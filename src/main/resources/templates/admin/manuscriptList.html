@@ -3,14 +3,14 @@
 	xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>文章管理</title>
+<title>草稿箱</title>
 <link th:href="@{/bootstrap/css/bootstrap.min.css}"
 	href="../../static/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 <link th:href="@{/bootstrap/css/dash-board.css}"
 	href="../../static/bootstrap/css/dash-board.css" rel="stylesheet" />
 <link th:href="@{/bootstrap/css/site-min.css}"
 	href="../../static/bootstrap/css/site-min.css" rel="stylesheet" />
-<link href="https://cdn.staticfile.org/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" />
+	<link href="https://cdn.staticfile.org/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" />
 
 <script th:src="@{/bootstrap/script/jquery-3.4.1.min.js}"
 	src="../../static/bootstrap/script/jquery-3.4.1.min.js"></script>
@@ -25,8 +25,8 @@
 				<li class="disabled"><a></a></li>
 				
 				<li><a href="#"><i class="icon ion-edit"></i>&emsp;发布文章</a></li>
-				<li class="active"><a href="/admin/article/list"><i class="icon ion-paper-airplane"></i>&emsp;文章管理</a></li>
-				<li><a href="/admin/manuscript/list"><i class="icon ion-checkmark-circled"></i>&emsp;草稿箱</a></li>
+				<li><a href="/admin/article/list"><i class="icon ion-paper-airplane"></i>&emsp;文章管理</a></li>
+				<li class="active"><a href="/admin/manuscript/list"><i class="icon ion-checkmark-circled"></i>&emsp;草稿箱</a></li>
 				<li><a href="/admin/recycle/list"><i class="icon ion-trash-a"></i>&emsp;回收站</a></li>
 			</ul>
 			<ul class="nav nav-sidebar">
@@ -70,14 +70,14 @@
 								<td th:text="${article.articleInfo.discuss}">Discuss</td>
 								<td th:text="${article.categoryStr}">Category</td>
 								<td>
-										<a th:href="@{'/admin/article/preview/'+${article.articleInfo.id}}"
-										   class="btn btn-default btn-sm">预览</a>
-										<a th:href="@{'/admin/article/edit/'+${article.articleInfo.id}}"
-										   class="btn btn-success btn-sm">修改</a>
-										<a th:href="@{'/admin/article/tomanuscript/'+${article.articleInfo.id}}"
-										   class="btn btn-info btn-sm">移至草稿箱</a>
-										<a th:href="@{'/admin/article/torecycle/'+${article.articleInfo.id}}"
-										   class="btn btn-danger btn-sm">移至回收站</a>
+									<a th:href="@{'/admin/article/preview/'+${article.articleInfo.id}}"
+									   class="btn btn-info btn-sm">预览</a>
+									<a th:href="@{'/admin/article/edit/'+${article.articleInfo.id}}"
+									   class="btn btn-warning btn-sm">修改</a>
+										<a th:href="@{'/admin/manuscript/release/'+${article.articleInfo.id}}"
+										   class="btn btn-success btn-sm">发布</a>
+									<a th:href="@{'/admin/manuscript/torecycle/'+${article.articleInfo.id}}"
+									   class="btn btn-danger btn-sm">移至回收站</a>
 								</td>
 							</tr>
 						</tbody>
@@ -86,14 +86,14 @@
 						<div class="col-md-12 column">
 							<ul class="pagination">
 								<li>
-									<a th:href="${thisPage > 0} ? '/admin/article/list?pageIndex=' + ${thisPage - 1}">Prev</a>
+									<a th:href="${thisPage > 0} ? '/admin/manuscript/list?pageIndex=' + ${thisPage - 1}">Prev</a>
 								</li>
 								<li th:each="page : ${totalPage}">
-									<a th:href="@{'/admin/article/list?pageIndex=' + ${page}}" th:text="${page}"
+									<a th:href="@{'/admin/manuscript/list?pageIndex=' + ${page}}" th:text="${page}"
 									   th:style="${page == thisPage}? 'background-color: #1A8BE8; color: aliceblue'"></a>
 								</li>
 								<li>
-									<a th:href="@{'/admin/article/list?pageIndex=' + ${thisPage + 1}}">Next</a>
+									<a th:href="@{'/admin/manuscript/list?pageIndex=' + ${thisPage + 1}}">Next</a>
 								</li>
 							</ul>
 						</div>
