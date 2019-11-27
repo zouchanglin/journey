@@ -30,7 +30,7 @@ public class ArticleInfoMapperTest {
         int ret = mapper.updateArticleReading(111, 1);
         assertEquals(1, ret);
     }
-
+    //更新文章信息测试
     @Test
     public void updateArticleInfoByObject(){
 
