@@ -11,7 +11,7 @@
  Target Server Version : 80016
  File Encoding         : 65001
 
- Date: 24/11/2019 01:56:27
+ Date: 28/11/2019 13:44:37
 */
 
 SET NAMES utf8mb4;
@@ -24,9 +24,8 @@ DROP TABLE IF EXISTS `article_info`;
 CREATE TABLE `article_info`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '文章主键',
   `tittle` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '文章标题',
-  `summary` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '文章摘要',
+  `summary` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '文章摘要',
   `content` text CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '文章Markdown内容',
-  `picture` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '文章首图',
   `reading` int(11) NOT NULL DEFAULT 0 COMMENT '文章阅读量',
   `love` int(11) NOT NULL DEFAULT 0 COMMENT '文章点赞数量',
   `discuss` int(11) NOT NULL DEFAULT 0 COMMENT '文章评论量',
@@ -34,8 +33,9 @@ CREATE TABLE `article_info`  (
   `category` int(11) DEFAULT NULL COMMENT '文章分类',
   `creatime` bigint(20) DEFAULT NULL COMMENT '文章创建日期',
   `updatime` bigint(20) DEFAULT NULL COMMENT '文章更新日期',
+  `top` tinyint(2) NOT NULL DEFAULT 1 COMMENT '文章置顶(0 置顶 、1 不置顶)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for article_tag
@@ -46,7 +46,7 @@ CREATE TABLE `article_tag`  (
   `article` int(11) NOT NULL,
   `tag` int(11) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 70 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for category_info
@@ -58,7 +58,7 @@ CREATE TABLE `category_info`  (
   `describes` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '分类描述',
   `amount` int(11) DEFAULT NULL COMMENT '分类下文章数(已发布的文章)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for config_info
@@ -86,7 +86,7 @@ CREATE TABLE `discuss_info`  (
   `article` int(11) DEFAULT NULL COMMENT '评论归属文章',
   `reply` int(11) DEFAULT NULL COMMENT '评论归属回复',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for tag_info
@@ -97,6 +97,6 @@ CREATE TABLE `tag_info`  (
   `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '标签名称',
   `amount` int(11) DEFAULT NULL COMMENT '含有此标签的文章数量',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
