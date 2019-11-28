@@ -19,4 +19,5 @@ public class ArticleInfo {
     private Integer category;
     private Long creatime;
     private Long updatime;
+    private Integer top;
 }

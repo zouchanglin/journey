@@ -51,11 +51,12 @@ public interface ArticleInfoMapper {
      * @param articleInfo 文章实体对象
      * @return 修改结果
      */
-    @Update("update article_info set tittle=#{tittle}, summary=#{summary}, " +
-            "content=#{content}, " +
+    @Update("update article_info set tittle=#{tittle}, " +
+            "summary=#{summary}, content=#{content}, " +
             "reading=#{reading}, love=#{love}, " +
             "discuss=#{discuss}, status=#{status}, " +
-            "category=#{category}, creatime=#{creatime}, updatime=#{updatime} " +
+            "category=#{category}, creatime=#{creatime}, " +
+            "updatime=#{updatime}, top=#{top} " +
             "where id=#{id}")
     int updateArticleInfoByObject(ArticleInfo articleInfo);
 
@@ -68,6 +69,15 @@ public interface ArticleInfoMapper {
      */
     @Update("update article_info set reading=#{reading} where id=#{id}")
     int updateArticleReading(Integer reading, Integer id);
+
+    /**
+     * 修改是否置顶
+     * @param top 0 置顶、1不置顶
+     * @param id 文章编号
+     * @return 更改结果
+     */
+    @Update("update article_info set top=#{top} where id=#{id}")
+    int updateArticleTop(Integer top, Integer id);
 
     /**
      * 更改文章状态
@@ -89,7 +99,8 @@ public interface ArticleInfoMapper {
             "#{content, jdbcType=LONGVARCHAR}, " +
             "#{reading, jdbcType=INTEGER}, #{love, jdbcType=INTEGER}," +
             "#{discuss, jdbcType=INTEGER}, #{status, jdbcType=TINYINT}," +
-            "#{category, jdbcType=INTEGER}, #{creatime, jdbcType=BIGINT}, #{updatime, jdbcType=BIGINT}) ")
+            "#{category, jdbcType=INTEGER}, #{creatime, jdbcType=BIGINT}, " +
+            "#{updatime, jdbcType=BIGINT}, #{top, jdbcType=TINYINT}) ")
     int insertArticleInfo(ArticleInfo articleInfo);
 
 
