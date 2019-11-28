@@ -6,16 +6,14 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-/**
- * 系统参数实体类
- * @author 长林
- */
 @Data
 @Entity
 @DynamicUpdate
-public class ConfigInfo {
+public class FragmentInfo {
     @Id
-    private String menu;
-    private String param;
-    private String argument;
+    private String fragmentName;
+
+    private String fragmentData;
+
+    private String fragmentAnnotation;
 }

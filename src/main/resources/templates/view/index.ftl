@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <title>AAA</title>
+    <title>${blogTitle}</title>
+
+    <link rel="apple-touch-icon" href="https://s2.ax1x.com/2019/07/25/eVznmt.png">
+    <link rel="shortcut icon" type="image/x-icon" href="https://s2.ax1x.com/2019/07/25/eVznmt.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@0.4.3/dist/css/mdui.min.css">
     <link rel="stylesheet" href="bootnexmoe/css/base.css">
     <link rel="stylesheet" href="bootnexmoe/css/font-icon.css">

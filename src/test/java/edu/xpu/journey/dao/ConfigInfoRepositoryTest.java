@@ -19,7 +19,7 @@ public class ConfigInfoRepositoryTest {
     public void save(){
         ConfigInfo configInfo = new ConfigInfo();
         configInfo.setMenu("pageSize");
-        configInfo.setParam(10);
+        configInfo.setParam("20");
         configInfo.setArgument("每页的文章数量");
         assertNotNull(configInfoRepository.save(configInfo));
     }
