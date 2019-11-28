@@ -3,6 +3,7 @@ package edu.xpu.journey.service.impl;
 import edu.xpu.journey.entity.ArticleInfo;
 import edu.xpu.journey.entity.mapper.ArticleInfoMapper;
 import edu.xpu.journey.enums.ArticleStatusEnum;
+import edu.xpu.journey.enums.ArticleTopEnum;
 import edu.xpu.journey.form.ArticleFrom;
 import edu.xpu.journey.service.ArticleService;
 import edu.xpu.journey.service.TagService;
@@ -79,7 +80,7 @@ public class ArticleServiceImpl implements ArticleService {
             saveArticleInfo.setReading(findArticleInfo.getLove());
             saveArticleInfo.setDiscuss(findArticleInfo.getDiscuss());
             saveArticleInfo.setCreatime(findArticleInfo.getCreatime());
-
+            saveArticleInfo.setTop(findArticleInfo.getTop());
             saveResult = articleInfoMapper.updateArticleInfoByObject(saveArticleInfo);
             log.info("[ArticleServiceImpl] releaseArticle() saveResult={}", saveResult);
         }else{
@@ -87,8 +88,8 @@ public class ArticleServiceImpl implements ArticleService {
             saveArticleInfo.setLove(0);
             saveArticleInfo.setReading(0);
             saveArticleInfo.setDiscuss(0);
+            saveArticleInfo.setTop(ArticleTopEnum.NO_TOP.getCode());
             saveArticleInfo.setCreatime(System.currentTimeMillis());
-
             saveResult = articleInfoMapper.insertArticleInfo(saveArticleInfo);
             log.info("[ArticleServiceImpl] releaseArticle() saveResult={}", saveResult);
         }

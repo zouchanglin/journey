@@ -10,7 +10,7 @@ import lombok.Getter;
 @Getter
 public enum ArticleStatusEnum implements EnumCode{
     /**
-     * 草稿、已经发布、已删除
+     * 0 草稿、 1 已经发布、 2 已删除
      */
     DEBUG(0, "草稿"),
     RELEASE(1, "已发布"),

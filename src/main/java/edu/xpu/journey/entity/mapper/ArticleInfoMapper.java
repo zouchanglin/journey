@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -106,4 +107,13 @@ public interface ArticleInfoMapper {
 
     @Select("select count(id) from article_info where status=#{status}")
     int countArticleByStatus(Integer status);
+
+    @Select("select count(id) from article_info")
+    int countArticles();
+
+    @Select("select SUM(reading) from article_info where status = #{status}")
+    int countArticleReadingByStatus(Integer status);
+
+    @Select("select SUM(love) from article_info where status = #{status}")
+    int countArticleLoveByStatus(Integer status);
 }

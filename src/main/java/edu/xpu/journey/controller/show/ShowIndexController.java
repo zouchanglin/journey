@@ -2,6 +2,7 @@ package edu.xpu.journey.controller.show;
 
 import edu.xpu.journey.enums.ArticleStatusEnum;
 import edu.xpu.journey.service.ArticleService;
+import edu.xpu.journey.service.CountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -15,15 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class ShowIndexController {
     @Autowired
-    private ArticleService articleService;
+    private CountService countService;
 
     @GetMapping
     public String getIndex(ModelMap modelMap){
         modelMap.addAttribute("blogTitle", "Tim的空间");
-        Integer articleCount = articleService.getArticleCountByStatus(ArticleStatusEnum.RELEASE.getCode());
-        modelMap.addAttribute("articleCount", articleCount);
-
-
+        modelMap.addAttribute("articleCount", countService.getArticleCountByStatus(ArticleStatusEnum.RELEASE.getCode()));
+        modelMap.addAttribute("discussCount", countService.getDiscussCount());
+        modelMap.addAttribute("loveCount", countService.getLoveCount());
+        modelMap.addAttribute("readingCount", countService.getReadingCount());
         return "view/index";
     }
 }

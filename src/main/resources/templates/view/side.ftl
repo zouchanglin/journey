@@ -10,15 +10,15 @@
         </div>
         <div>
             <span>评论</span>
-            256
+            ${discussCount}
         </div>
         <div>
             <span>点赞</span>
-            128
+            ${loveCount}
         </div>
         <div>
             <span>浏览</span>
-            102400
+            ${readingCount}
         </div>
     </div>
     <div class="list-content">
