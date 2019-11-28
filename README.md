@@ -16,4 +16,4 @@
 
 # 二、表关系设计
 
-![](sql_model.png)
+![](https://s2.ax1x.com/2019/11/28/QFQuLD.png)
