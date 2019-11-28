@@ -18,13 +18,12 @@
 <script th:src="@{/bootstrap/js/bootstrap.min.js}"
 	src="../../static/bootstrap/js/bootstrap.min.js"></script>
 </head>
-<body>
-	<nav th:replace="adminHeader :: ctrl_header"></nav>
+<body style="padding-top: 0px">
 	<div class="container-fluid">
 		<div class="col-sm-1 col-md-2 sidebar">
 			<ul class="nav nav-sidebar">
-				<li class="disabled"><a></a></li>
-
+				<li><a href="#"><i class="icon ion-paper-airplane"></i>&emsp;数据概览</a></li>
+				<br>
 				<li><a href="#"><i class="icon ion-edit"></i>&emsp;发布文章</a></li>
 				<li><a href="/admin/article/list"><i class="icon ion-paper-airplane"></i>&emsp;文章管理</a></li>
 				<li><a href="/admin/manuscript/list"><i class="icon ion-checkmark-circled"></i>&emsp;草稿箱</a></li>
