@@ -17,3 +17,17 @@
 # 二、表关系设计
 
 ![](https://s2.ax1x.com/2019/11/28/QFQuLD.png)
+
+# 三、技术架构
+
+使用SpringBoot作为基础架构
+
+使用Thymeleaf 模板引擎实现的后端管理，集成了一些 BootStrap 组件
+
+使用Freemarker 模板引擎实现的前端展示页面，其中移植了nexmoe这款hexo的皮肤
+
+数据库使用 MySQL8.0 
+
+数据库框架使用MyBatis 和 SpringDataJPA ，看实际情况而定
+
+搜索引擎使用 ElasticSearch 实现全文检索
