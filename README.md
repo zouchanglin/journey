@@ -10,7 +10,13 @@
 
 * Markdown文件存储：文章中的文件、图片资源等既可以通过服务器本地保存，也可以设置七牛云等第三方云存储、并且可以直接可视化管理
 
+# 二、如何使用
 
+* 新建数据库journey，字符编码为UTF-8，校验规则 utf8_general_ci
+* 执行journey.sql ，这会导入必要的配置项和表信息
+* 安装 ElasticSearch ，具体安装方式后面完善
+* 获取到源码后直接使用 `mvn package -Dmaven.test.skip=true`  打包即可
+* 最后一步：`java -jar journey-0.0.1-SNAPSHOT.jar ` 即可，访问 localhost:8080 
 
 
 
@@ -31,3 +37,4 @@
 数据库框架使用MyBatis 和 SpringDataJPA ，看实际情况而定
 
 搜索引擎使用 ElasticSearch 实现全文检索
+

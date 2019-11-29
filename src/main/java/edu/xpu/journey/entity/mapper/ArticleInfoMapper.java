@@ -106,14 +106,14 @@ public interface ArticleInfoMapper {
 
 
     @Select("select count(id) from article_info where status=#{status}")
-    int countArticleByStatus(Integer status);
+    Integer countArticleByStatus(Integer status);
 
     @Select("select count(id) from article_info")
-    int countArticles();
+    Integer countArticles();
 
     @Select("select SUM(reading) from article_info where status = #{status}")
-    int countArticleReadingByStatus(Integer status);
+    Long countArticleReadingByStatus(Integer status);
 
     @Select("select SUM(love) from article_info where status = #{status}")
-    int countArticleLoveByStatus(Integer status);
+    Integer countArticleLoveByStatus(Integer status);
 }

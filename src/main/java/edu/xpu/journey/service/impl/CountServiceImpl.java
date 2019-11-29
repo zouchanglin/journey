@@ -26,16 +26,19 @@ public class CountServiceImpl implements CountService {
 
     @Override
     public long getReadingCount() {
-        return articleInfoMapper.countArticleReadingByStatus(ArticleStatusEnum.RELEASE.getCode());
+        Long ret = articleInfoMapper.countArticleReadingByStatus(ArticleStatusEnum.RELEASE.getCode());
+        return ret == null ? 0:ret;
     }
 
     @Override
     public int getLoveCount() {
-        return articleInfoMapper.countArticleLoveByStatus(ArticleStatusEnum.RELEASE.getCode());
+        Integer ret = articleInfoMapper.countArticleLoveByStatus(ArticleStatusEnum.RELEASE.getCode());
+        return ret == null ? 0:ret;
     }
 
     @Override
     public int getDiscussCount() {
+        //TODO 只统计发布文章的评论
         return (int)discussInfoRepository.count();
     }
 }

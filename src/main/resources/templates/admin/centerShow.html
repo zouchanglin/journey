@@ -1,52 +1,440 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Title</title>
-<link th:href="@{/bootstrap/css/bootstrap.min.css}"
-	href="../../static/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-<link th:href="@{/bootstrap/css/dash-board.css}"
-	href="../../static/bootstrap/css/dash-board.css" rel="stylesheet" />
-<link th:href="@{/bootstrap/css/site-min.css}"
-	href="../../static/bootstrap/css/site-min.css" rel="stylesheet" />
-	<link th:href="@{/bootstrap/css/ionicons.min.css}"
-		  href="../../static/bootstrap/css/ionicons.min.css" rel="stylesheet" />
-	<link href="https://cdn.staticfile.org/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" />
-<script th:src="@{/bootstrap/script/jquery-3.4.1.min.js}"
-	src="../../static/bootstrap/script/jquery-3.4.1.min.js"></script>
-<script th:src="@{/bootstrap/js/bootstrap.min.js}"
-	src="../../static/bootstrap/js/bootstrap.min.js"></script>
-</head>
-<body style="padding-top: 0px">
-	<div class="container-fluid">
-		<div class="col-sm-1 col-md-2 sidebar">
-			<ul class="nav nav-sidebar">
-				<li><a href="#"><i class="icon ion-paper-airplane"></i>&emsp;数据概览</a></li>
-				<br>
-				<li><a href="#"><i class="icon ion-edit"></i>&emsp;发布文章</a></li>
-				<li><a href="/admin/article/list"><i class="icon ion-paper-airplane"></i>&emsp;文章管理</a></li>
-				<li><a href="/admin/manuscript/list"><i class="icon ion-checkmark-circled"></i>&emsp;草稿箱</a></li>
-				<li><a href="/admin/recycle/list"><i class="icon ion-trash-a"></i>&emsp;回收站</a></li>
-			</ul>
-			<ul class="nav nav-sidebar">
-				<li class="disabled"><a></a></li>
-				<li><a href=""><i class="icon ion-xbox"></i>&emsp;分类管理</a></li>
-				<li><a href=""><i class="icon ion-contrast"></i>&emsp;新建分类</a></li>
-			</ul>
-			<ul class="nav nav-sidebar">
-				<li class="disabled"><a></a></li>
-				<li><a href="#"><i class="icon ion-chatbubbles"></i>&emsp;评论管理</a></li>
-			</ul>
-			<ul class="nav nav-sidebar">
-				<li class="disabled"><a></a></li>
-				<li><a href="#" class=""><i class="icon ion-images"></i>&emsp;文件管理</a></li>
-				<li><a href="#" class=""><i class="icon ion-wrench"></i>&emsp;系统参数</a></li>
-			</ul>
-		</div>
-		<div class="col-sm-11 col-sm-offset-3 col-md-10 col-md-offset-2">
-			<h1 class="page-header">数据仪表盘</h1>
-		</div>
-	</div>
-</body>
+      xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Home</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" th:href="@{/dashboard/vendor/bootstrap/css/bootstrap.min.css}" href="../../static/dashboard/vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <!-- Google fonts - Popppins for copy-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,800">
+    <!-- orion icons-->
+    <link rel="stylesheet" th:href="@{/dashboard/css/orionicons.css}" href="../../static/dashboard/css/orionicons.css">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" th:href="@{/dashboard/css/style.default.css}" href="../../static/dashboard/css/style.default.css" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" th:href="@{/dashboard/css/custom.css}" href="../../static/dashboard/css/custom.css">
+    <!-- Favicon-->
+<!--    <link rel="shortcut icon" th:href="@{/dashboard/img/favicon.png}" href="../../static/dashboard/img/favicon.png">-->
+<!--    <link rel="shortcut icon" th:href="@{/dashboard/img/favicon.png}" type="image/x-icon" href="../../static/dashboard/img/favicon.png">-->
+<!--    <link rel="shortcut icon" type="image/x-icon" href="https://s2.ax1x.com/2019/07/25/eVznmt.png">-->
+    <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+  </head>
+  <body>
+  <!-- navbar-->
+    <header class="header">
+    <nav class="navbar navbar-expand-lg px-4 py-2 bg-white shadow"><a href="#" class="sidebar-toggler text-gray-500 mr-4 mr-lg-5 lead"><i class="fas fa-align-left"></i></a><a href="index.html" class="navbar-brand font-weight-bold text-uppercase text-base">Bubbly Dashboard</a>
+      <ul class="ml-auto d-flex align-items-center list-unstyled mb-0">
+        <li class="nav-item">
+          <form id="searchForm" class="ml-auto d-none d-lg-block">
+            <div class="form-group position-relative mb-0">
+              <button type="submit" style="top: -3px; left: 0;" class="position-absolute bg-white border-0 p-0"><i class="o-search-magnify-1 text-gray text-lg"></i></button>
+              <input type="search" placeholder="Search ..." class="form-control form-control-sm border-0 no-shadow pl-4">
+            </div>
+          </form>
+        </li>
+        <li class="nav-item dropdown mr-3"><a id="notifications" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle text-gray-400 px-1"><i class="fa fa-bell"></i><span class="notification-icon"></span></a>
+          <div aria-labelledby="notifications" class="dropdown-menu"><a href="#" class="dropdown-item">
+            <div class="d-flex align-items-center">
+              <div class="icon icon-sm bg-violet text-white"><i class="fab fa-twitter"></i></div>
+              <div class="text ml-2">
+                <p class="mb-0">You have 2 followers</p>
+              </div>
+            </div></a><a href="#" class="dropdown-item">
+            <div class="d-flex align-items-center">
+              <div class="icon icon-sm bg-green text-white"><i class="fas fa-envelope"></i></div>
+              <div class="text ml-2">
+                <p class="mb-0">You have 6 new messages</p>
+              </div>
+            </div></a><a href="#" class="dropdown-item">
+            <div class="d-flex align-items-center">
+              <div class="icon icon-sm bg-blue text-white"><i class="fas fa-upload"></i></div>
+              <div class="text ml-2">
+                <p class="mb-0">Server rebooted</p>
+              </div>
+            </div></a><a href="#" class="dropdown-item">
+            <div class="d-flex align-items-center">
+              <div class="icon icon-sm bg-violet text-white"><i class="fab fa-twitter"></i></div>
+              <div class="text ml-2">
+                <p class="mb-0">You have 2 followers</p>
+              </div>
+            </div></a>
+            <div class="dropdown-divider"></div><a href="#" class="dropdown-item text-center"><small class="font-weight-bold headings-font-family text-uppercase">View all notifications</small></a>
+          </div>
+        </li>
+        <li class="nav-item dropdown ml-auto"><a id="userInfo" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle"><img th:src="@{/dashboard/img/avatar-6.jpg}" alt="Jason Doe" style="max-width: 2.5rem;" class="img-fluid rounded-circle shadow"></a>
+          <div aria-labelledby="userInfo" class="dropdown-menu"><a href="#" class="dropdown-item"><strong class="d-block text-uppercase headings-font-family">Mark Stephen</strong><small>Web Developer</small></a>
+            <div class="dropdown-divider"></div><a href="#" class="dropdown-item">Settings</a><a href="#" class="dropdown-item">Activity log       </a>
+            <div class="dropdown-divider"></div><a href="login.html" class="dropdown-item">Logout</a>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+    <div class="d-flex align-items-stretch">
+      <div id="sidebar" class="sidebar py-3">
+        <ul class="sidebar-menu list-unstyled">
+          <li class="sidebar-list-item"><a href="/admin/center" class="sidebar-link text-muted active"><i class="o-home-1 mr-3 text-gray"></i><span>首页</span></a></li>
+        </ul>
+        <ul class="sidebar-menu list-unstyled">
+          <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><i class="o-code-window-1 mr-3 text-gray"></i><span>写文章</span></a></li>
+          <li class="sidebar-list-item"><a href="/admin/article/list" class="sidebar-link text-muted"><i class="o-sales-up-1 mr-3 text-gray"></i><span>已发布</span></a></li>
+              <li class="sidebar-list-item"><a href="/admin/manuscript/list" class="sidebar-link text-muted"><i class="o-table-content-1 mr-3 text-gray"></i><span>草稿箱</span></a></li>
+              <li class="sidebar-list-item"><a href="/admin/recycle/list" class="sidebar-link text-muted"><i class="o-imac-screen-1 mr-3 text-gray"></i><span>回收站</span></a></li>
+        </ul>
+<!--        <div class="text-gray-400 text-uppercase px-3 px-lg-4 py-4 font-weight-bold small headings-font-family">EXTRAS</div>-->
+        <ul class="sidebar-menu list-unstyled">
+              <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><i class="o-settings-window-1 mr-3 text-gray"></i><span>分类管理</span></a></li>
+              <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><i class="o-imac-screen-1 mr-3 text-gray"></i><span>标签管理</span></a></li>
+        </ul>
+        <ul class="sidebar-menu list-unstyled">
+          <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><i class="o-settings-window-1 mr-3 text-gray"></i><span>文件管理</span></a></li>
+          <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><i class="o-contact-card-1 mr-3 text-gray"></i><span>模块管理</span></a></li>
+          <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><i class="o-code-window-1 mr-3 text-gray"></i><span>系统设置</span></a></li>
+          <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><i class="o-exit-1 mr-3 text-gray"></i><span>登出</span></a></li>
+        </ul>
+
+      </div><div class="tlinks">Collect from <a href="http://www.cssmoban.com/"  title="网站模板">网站模板</a></div>
+      <div class="page-holder w-100 d-flex flex-wrap">
+        <div class="container-fluid px-xl-5">
+          <section class="py-5">
+            <div class="row">
+              <div class="col-xl-3 col-lg-6 mb-4 mb-xl-0">
+                <div class="bg-white shadow roundy p-4 h-100 d-flex align-items-center justify-content-between">
+                  <div class="flex-grow-1 d-flex align-items-center">
+                    <div class="dot mr-3 bg-violet"></div>
+                    <div class="text">
+                      <h6 class="mb-0">Data consumed</h6><span class="text-gray">145,14 GB</span>
+                    </div>
+                  </div>
+                  <div class="icon text-white bg-violet"><i class="fas fa-server"></i></div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-lg-6 mb-4 mb-xl-0">
+                <div class="bg-white shadow roundy p-4 h-100 d-flex align-items-center justify-content-between">
+                  <div class="flex-grow-1 d-flex align-items-center">
+                    <div class="dot mr-3 bg-green"></div>
+                    <div class="text">
+                      <h6 class="mb-0">Open cases</h6><span class="text-gray">32</span>
+                    </div>
+                  </div>
+                  <div class="icon text-white bg-green"><i class="far fa-clipboard"></i></div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-lg-6 mb-4 mb-xl-0">
+                <div class="bg-white shadow roundy p-4 h-100 d-flex align-items-center justify-content-between">
+                  <div class="flex-grow-1 d-flex align-items-center">
+                    <div class="dot mr-3 bg-blue"></div>
+                    <div class="text">
+                      <h6 class="mb-0">Work orders</h6><span class="text-gray">400</span>
+                    </div>
+                  </div>
+                  <div class="icon text-white bg-blue"><i class="fa fa-dolly-flatbed"></i></div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-lg-6 mb-4 mb-xl-0">
+                <div class="bg-white shadow roundy p-4 h-100 d-flex align-items-center justify-content-between">
+                  <div class="flex-grow-1 d-flex align-items-center">
+                    <div class="dot mr-3 bg-red"></div>
+                    <div class="text">
+                      <h6 class="mb-0">New invoices</h6><span class="text-gray">123</span>
+                    </div>
+                  </div>
+                  <div class="icon text-white bg-red"><i class="fas fa-receipt"></i></div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section>
+            <div class="row mb-4">
+              <div class="col-lg-7 mb-4 mb-lg-0">
+                <div class="card">
+                  <div class="card-header">
+                    <h2 class="h6 text-uppercase mb-0">Current server uptime</h2>
+                  </div>
+                  <div class="card-body">
+                    <p class="text-gray">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    <div class="chart-holder">
+                      <canvas id="lineChart1" style="max-height: 14rem !important;" class="w-100"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-5 mb-4 mb-lg-0 pl-lg-0">
+                <div class="card mb-3">
+                  <div class="card-body">
+                    <div class="row align-items-center flex-row">
+                      <div class="col-lg-5">
+                        <h2 class="mb-0 d-flex align-items-center"><span>86.4</span><span class="dot bg-green d-inline-block ml-3"></span></h2><span class="text-muted text-uppercase small">Work hours</span>
+                        <hr><small class="text-muted">Lorem ipsum dolor sit</small>
+                      </div>
+                      <div class="col-lg-7">
+                        <canvas id="pieChartHome1"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row align-items-center flex-row">
+                      <div class="col-lg-5">
+                        <h2 class="mb-0 d-flex align-items-center"><span>1.724</span><span class="dot bg-violet d-inline-block ml-3"></span></h2><span class="text-muted text-uppercase small">Server time</span>
+                        <hr><small class="text-muted">Lorem ipsum dolor sit</small>
+                      </div>
+                      <div class="col-lg-7">
+                        <canvas id="pieChartHome2"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-5 mb-4 mb-lg-0">
+                <div class="card mb-3">
+                  <div class="card-body">
+                    <div class="row align-items-center mb-3 flex-row">
+                      <div class="col-lg-5">
+                        <h2 class="mb-0 d-flex align-items-center"><span>86%</span><span class="dot bg-violet d-inline-block ml-3"></span></h2><span class="text-muted text-uppercase small">Monthly Usage</span>
+                        <hr><small class="text-muted">Lorem ipsum dolor sit</small>
+                      </div>
+                      <div class="col-lg-7">
+                        <canvas id="pieChartHome3"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row align-items-center flex-row">
+                      <div class="col-lg-5">
+                        <h2 class="mb-0 d-flex align-items-center"><span>$126,41</span><span class="dot bg-green d-inline-block ml-3"></span></h2><span class="text-muted text-uppercase small">All Income</span>
+                        <hr><small class="text-muted">Lorem ipsum dolor sit</small>
+                      </div>
+                      <div class="col-lg-7">
+                        <canvas id="pieChartHome4"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-7">
+                <div class="card">
+                  <div class="card-header">
+                    <h2 class="h6 text-uppercase mb-0">Total Overdue</h2>
+                  </div>
+                  <div class="card-body">
+                    <p class="text-gray">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    <div class="chart-holder">
+                      <canvas id="lineChart2" style="max-height: 14rem !important;" class="w-100"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="py-5">
+            <div class="row text-dark">
+              <div class="col-lg-4 mb-4 mb-lg-0">
+                <div class="card rounded credit-card bg-hover-gradient-violet">
+                  <div class="content d-flex flex-column justify-content-between p-4">
+                    <h1 class="mb-5"><i class="fab fa-cc-visa"></i></h1>
+                    <div class="d-flex justify-content-between align-items-end pt-3">
+                      <div class="text-uppercase">
+                        <div class="font-weight-bold d-block">Card Number</div><small class="text-gray">1245 1478 1362 6985</small>
+                      </div>
+                      <h4 class="mb-0">$417.78</h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 mb-4 mb-lg-0">
+                <div class="card rounded credit-card bg-hover-gradient-blue">
+                  <div class="content d-flex flex-column justify-content-between p-4">
+                    <h1 class="mb-5"><i class="fab fa-cc-mastercard"></i></h1>
+                    <div class="d-flex justify-content-between align-items-end pt-3">
+                      <div class="text-uppercase">
+                        <div class="font-weight-bold d-block">Card Number</div><small class="text-gray">1245 1478 1362 6985</small>
+                      </div>
+                      <h4 class="mb-0">$124.17</h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 mb-4 mb-lg-0">
+                <div class="card rounded credit-card bg-hover-gradient-green">
+                  <div class="content d-flex flex-column justify-content-between p-4">
+                    <h1 class="mb-5"><i class="fab fa-cc-discover"></i></h1>
+                    <div class="d-flex justify-content-between align-items-end pt-3">
+                      <div class="text-uppercase">
+                        <div class="font-weight-bold d-block">Card Number</div><small class="text-gray">1245 1478 1362 6985</small>
+                      </div>
+                      <h4 class="mb-0">$568.00</h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section>
+            <div class="row">
+              <div class="col-lg-8">
+                <div class="card mb-5 mb-lg-0">         
+                  <div class="card-header">
+                    <h2 class="h6 mb-0 text-uppercase">Transaction history</h2>
+                  </div>
+                  <div class="card-body">
+                    <p class="text-gray mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    <div class="d-flex justify-content-between align-items-start align-items-sm-center mb-4 flex-column flex-sm-row">
+                      <div class="left d-flex align-items-center">
+                        <div class="icon icon-lg shadow mr-3 text-gray"><i class="fab fa-dropbox"></i></div>
+                        <div class="text">
+                          <h6 class="mb-0 d-flex align-items-center"> <span>Dropbox Inc.</span><span class="dot dot-sm ml-2 bg-violet"></span></h6><small class="text-gray">Account renewal</small>
+                        </div>
+                      </div>
+                      <div class="right ml-5 ml-sm-0 pl-3 pl-sm-0 text-violet">
+                        <h5>-$20</h5>
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-start align-items-sm-center mb-4 flex-column flex-sm-row">
+                      <div class="left d-flex align-items-center">
+                        <div class="icon icon-lg shadow mr-3 text-gray"><i class="fab fa-apple"></i></div>
+                        <div class="text">
+                          <h6 class="mb-0 d-flex align-items-center"> <span>App Store.</span><span class="dot dot-sm ml-2 bg-green"></span></h6><small class="text-gray">Software cost</small>
+                        </div>
+                      </div>
+                      <div class="right ml-5 ml-sm-0 pl-3 pl-sm-0 text-green">
+                        <h5>-$20</h5>
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-start align-items-sm-center mb-4 flex-column flex-sm-row">
+                      <div class="left d-flex align-items-center">
+                        <div class="icon icon-lg shadow mr-3 text-gray"><i class="fas fa-shopping-basket"></i></div>
+                        <div class="text">
+                          <h6 class="mb-0 d-flex align-items-center"> <span>Supermarket.</span><span class="dot dot-sm ml-2 bg-blue"></span></h6><small class="text-gray">Shopping</small>
+                        </div>
+                      </div>
+                      <div class="right ml-5 ml-sm-0 pl-3 pl-sm-0 text-blue">
+                        <h5>-$20</h5>
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-start align-items-sm-center mb-4 flex-column flex-sm-row">
+                      <div class="left d-flex align-items-center">
+                        <div class="icon icon-lg shadow mr-3 text-gray"><i class="fab fa-android"></i></div>
+                        <div class="text">
+                          <h6 class="mb-0 d-flex align-items-center"> <span>Play Store.</span><span class="dot dot-sm ml-2 bg-red"></span></h6><small class="text-gray">Software cost</small>
+                        </div>
+                      </div>
+                      <div class="right ml-5 ml-sm-0 pl-3 pl-sm-0 text-red">
+                        <h5>-$20</h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="bg-white shadow roundy px-4 py-3 d-flex align-items-center justify-content-between mb-4">
+                  <div class="flex-grow-1 d-flex align-items-center">
+                    <div class="dot mr-3 bg-violet"></div>
+                    <div class="text">
+                      <h6 class="mb-0">Completed cases</h6><span class="text-gray">127 new cases</span>
+                    </div>
+                  </div>
+                  <div class="icon bg-violet text-white"><i class="fas fa-clipboard-check"></i></div>
+                </div>
+                <div class="bg-white shadow roundy px-4 py-3 d-flex align-items-center justify-content-between mb-4">
+                  <div class="flex-grow-1 d-flex align-items-center">
+                    <div class="dot mr-3 bg-green"></div>
+                    <div class="text">
+                      <h6 class="mb-0">New Quotes</h6><span class="text-gray">214 new quotes</span>
+                    </div>
+                  </div>
+                  <div class="icon bg-green text-white"><i class="fas fa-dollar-sign"></i></div>
+                </div>
+                <div class="bg-white shadow roundy px-4 py-3 d-flex align-items-center justify-content-between mb-4">
+                  <div class="flex-grow-1 d-flex align-items-center">
+                    <div class="dot mr-3 bg-blue"></div>
+                    <div class="text">
+                      <h6 class="mb-0">New clients</h6><span class="text-gray">25 new clients</span>
+                    </div>
+                  </div>
+                  <div class="icon bg-blue text-white"><i class="fas fa-user-friends"></i></div>
+                </div>
+                <div class="card px-5 py-4">
+                  <h2 class="mb-0 d-flex align-items-center"><span>86.4</span><span class="dot bg-red d-inline-block ml-3"></span></h2><span class="text-muted">Server time</span>
+                  <div class="chart-holder">
+                    <canvas id="lineChart3" style="max-height: 7rem !important;" class="w-100">      </canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="py-5">
+            <div class="row">
+              <div class="col-lg-12"><a href="#" class="message card px-5 py-3 mb-4 bg-hover-gradient-primary no-anchor-style">
+                  <div class="row">
+                    <div class="col-lg-3 d-flex align-items-center flex-column flex-lg-row text-center text-md-left"><strong class="h5 mb-0">24<sup class="smaller text-gray font-weight-normal">Apr</sup></strong>
+                      <img th:src="@{/dashboard/img/avatar-1.jpg}" alt="..." style="max-width: 3rem" class="rounded-circle mx-3 my-2 my-lg-0">
+                      <h6 class="mb-0">Jason Maxwell</h6>
+                    </div>
+                    <div class="col-lg-9 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
+                      <div class="bg-gray-100 roundy px-4 py-1 mr-0 mr-lg-3 mt-2 mt-lg-0 text-dark exclode">User testing</div>
+                      <p class="mb-0 mt-3 mt-lg-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
+                    </div>
+                  </div></a></div>
+              <div class="col-lg-12"><a href="#" class="message card px-5 py-3 mb-4 bg-hover-gradient-primary no-anchor-style">
+                  <div class="row">
+                    <div class="col-lg-3 d-flex align-items-center flex-column flex-lg-row text-center text-md-left"><strong class="h5 mb-0">24<sup class="smaller text-gray font-weight-normal">Nov</sup></strong><img th:src="@{/dashboard/img/avatar-3.jpg}" alt="..." style="max-width: 3rem" class="rounded-circle mx-3 my-2 my-lg-0">
+                      <h6 class="mb-0">Sam Andy</h6>
+                    </div>
+                    <div class="col-lg-9 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
+                      <div class="bg-gray-100 roundy px-4 py-1 mr-0 mr-lg-3 mt-2 mt-lg-0 text-dark exclode">Web Developer</div>
+                      <p class="mb-0 mt-3 mt-lg-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
+                    </div>
+                  </div></a></div>
+              <div class="col-lg-12"><a href="#" class="message card px-5 py-3 mb-4 bg-hover-gradient-primary no-anchor-style">
+                  <div class="row">
+                    <div class="col-lg-3 d-flex align-items-center flex-column flex-lg-row text-center text-md-left"><strong class="h5 mb-0">17<sup class="smaller text-gray font-weight-normal">Aug</sup></strong>
+                      <img th:src="@{/dashboard/img/avatar-3.jpg}" alt="..." style="max-width: 3rem" class="rounded-circle mx-3 my-2 my-lg-0">
+                      <h6 class="mb-0">Margret Peter</h6>
+                    </div>
+                    <div class="col-lg-9 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
+                      <div class="bg-gray-100 roundy px-4 py-1 mr-0 mr-lg-3 mt-2 mt-lg-0 text-dark exclode">Analysis Agent</div>
+                      <p class="mb-0 mt-3 mt-lg-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
+                    </div>
+                  </div></a></div>
+              <div class="col-lg-12"><a href="#" class="message card px-5 py-3 mb-4 bg-hover-gradient-primary no-anchor-style">
+                  <div class="row">
+                    <div class="col-lg-3 d-flex align-items-center flex-column flex-lg-row text-center text-md-left"><strong class="h5 mb-0">15<sup class="smaller text-gray font-weight-normal">Sep</sup></strong>
+                      <img th:src="@{/dashboard/img/avatar-4.jpg}" alt="..." style="max-width: 3rem" class="rounded-circle mx-3 my-2 my-lg-0">
+                      <h6 class="mb-0">Jason Doe</h6>
+                    </div>
+                    <div class="col-lg-9 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
+                      <div class="bg-gray-100 roundy px-4 py-1 mr-0 mr-lg-3 mt-2 mt-lg-0 text-dark exclode">User testing</div>
+                      <p class="mb-0 mt-3 mt-lg-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
+                    </div>
+                  </div></a></div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <!-- JavaScript files-->
+    <script th:src="@{/dashboard/vendor/jquery/jquery.min.js}" src="../../static/dashboard/vendor/jquery/jquery.min.js"></script>
+    <script th:src="@{/dashboard/vendor/popper.js/umd/popper.min.js}" src="../../static/dashboard/vendor/popper.js/umd/popper.min.js"> </script>
+    <script th:src="@{/dashboard/vendor/bootstrap/js/bootstrap.min.js}" src="../../static/dashboard/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script th:src="@{/dashboard/vendor/jquery.cookie/jquery.cookie.js}" src="../../static/dashboard/vendor/jquery.cookie/jquery.cookie.js"> </script>
+    <script th:src="@{/dashboard/vendor/chart.js/Chart.min.js}" src="../../static/dashboard/vendor/chart.js/Chart.min.js"></script>
+    <script th:src="@{/dashboard/js/js.cookie.min.js}" src="../../static/dashboard/js/js.cookie.min.js"></script>
+    <script th:src="@{/dashboard/js/charts-home.js}" src="../../static/dashboard/js/charts-home.js"></script>
+    <script th:src="@{/dashboard/js/front.js}" src="../../static/dashboard/js/front.js"></script>
+  </body>
 </html>
