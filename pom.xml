@@ -7,13 +7,13 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.2.1.RELEASE</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<relativePath />
 	</parent>
 	<groupId>xpu.edu</groupId>
 	<artifactId>journey</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>journey</name>
-	<description>journey，a blog system</description>
+	<description>Journey, a blog system for everyone</description>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -76,7 +76,8 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+
+
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
