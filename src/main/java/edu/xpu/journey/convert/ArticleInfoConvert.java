@@ -8,11 +8,9 @@ import edu.xpu.journey.entity.TagInfo;
 import edu.xpu.journey.entity.mapper.TagInfoMapper;
 import edu.xpu.journey.show.ArticleInfoShow;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -21,10 +19,13 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 public class ArticleInfoConvert {
-    @Autowired
-    private CategoryInfoRepository categoryRepository;
-    @Autowired
-    private TagInfoMapper tagInfoMapper;
+    private final CategoryInfoRepository categoryRepository;
+    private final TagInfoMapper tagInfoMapper;
+
+    public ArticleInfoConvert(CategoryInfoRepository categoryRepository, TagInfoMapper tagInfoMapper) {
+        this.categoryRepository = categoryRepository;
+        this.tagInfoMapper = tagInfoMapper;
+    }
 
 
     public List<ArticleInfoShow> convertList(List<ArticleInfo> list){

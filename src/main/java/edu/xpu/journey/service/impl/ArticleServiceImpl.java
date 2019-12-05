@@ -9,7 +9,6 @@ import edu.xpu.journey.service.ArticleService;
 import edu.xpu.journey.service.TagService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,10 +22,13 @@ import java.util.List;
 public class ArticleServiceImpl implements ArticleService {
 
 
-    @Autowired
-    private ArticleInfoMapper articleInfoMapper;
-    @Autowired
-    private TagService tagService;
+    private final ArticleInfoMapper articleInfoMapper;
+    private final TagService tagService;
+
+    public ArticleServiceImpl(ArticleInfoMapper articleInfoMapper, TagService tagService) {
+        this.articleInfoMapper = articleInfoMapper;
+        this.tagService = tagService;
+    }
 
 
     @Override
@@ -71,7 +73,7 @@ public class ArticleServiceImpl implements ArticleService {
         saveArticleInfo.setUpdatime(System.currentTimeMillis());
         //处理 Tags
         tagService.setTagsForArticle(article, articleFrom.getTags());
-        int saveResult = 0;
+        int saveResult;
 
         if(findArticleInfo != null){
             //修改已有文章并发布
@@ -82,7 +84,6 @@ public class ArticleServiceImpl implements ArticleService {
             saveArticleInfo.setCreatime(findArticleInfo.getCreatime());
             saveArticleInfo.setTop(findArticleInfo.getTop());
             saveResult = articleInfoMapper.updateArticleInfoByObject(saveArticleInfo);
-            log.info("[ArticleServiceImpl] releaseArticle() saveResult={}", saveResult);
         }else{
             //直接写的新文章发布
             saveArticleInfo.setLove(0);
@@ -91,8 +92,8 @@ public class ArticleServiceImpl implements ArticleService {
             saveArticleInfo.setTop(ArticleTopEnum.NO_TOP.getCode());
             saveArticleInfo.setCreatime(System.currentTimeMillis());
             saveResult = articleInfoMapper.insertArticleInfo(saveArticleInfo);
-            log.info("[ArticleServiceImpl] releaseArticle() saveResult={}", saveResult);
         }
+        log.info("[ArticleServiceImpl] releaseArticle() saveResult={}", saveResult);
 
         return saveResult == 1 ? saveArticleInfo:null;
     }

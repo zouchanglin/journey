@@ -5,7 +5,6 @@ import edu.xpu.journey.entity.TagInfo;
 import edu.xpu.journey.entity.mapper.ArticleInfoMapper;
 import edu.xpu.journey.entity.mapper.TagInfoMapper;
 import edu.xpu.journey.service.TagService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,10 +14,13 @@ import java.util.List;
  */
 @Service
 public class TagServiceImpl implements TagService {
-    @Autowired
-    private TagInfoMapper tagInfoMapper;
-    @Autowired
-    private ArticleInfoMapper articleInfoMapper;
+    private final TagInfoMapper tagInfoMapper;
+    private final ArticleInfoMapper articleInfoMapper;
+
+    public TagServiceImpl(TagInfoMapper tagInfoMapper, ArticleInfoMapper articleInfoMapper) {
+        this.tagInfoMapper = tagInfoMapper;
+        this.articleInfoMapper = articleInfoMapper;
+    }
 
     @Override
     public List<TagInfo> getArticleTag(Integer article) {

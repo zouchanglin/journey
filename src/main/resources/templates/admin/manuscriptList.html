@@ -129,7 +129,7 @@
                       </tr>
                       </thead>
                       <tbody>
-                      <tr th:each="article: ${releaseList}">
+                      <tr th:each="article: ${manuscriptLists}">
                         <td>
                           <a style="color: #000000" th:href="@{'/admin/article/preview/'+${article.articleInfo.id}}"
                              class="btn-link" th:text="${article.articleInfo.tittle}"></a>

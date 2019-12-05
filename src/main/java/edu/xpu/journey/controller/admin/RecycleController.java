@@ -1,14 +1,10 @@
 package edu.xpu.journey.controller.admin;
 
 import com.google.common.collect.Lists;
-import edu.xpu.journey.config.FileUpLoadConfig;
 import edu.xpu.journey.convert.ArticleInfoConvert;
 import edu.xpu.journey.entity.ArticleInfo;
 import edu.xpu.journey.enums.ArticleStatusEnum;
 import edu.xpu.journey.service.ArticleService;
-import edu.xpu.journey.service.CategoryService;
-import edu.xpu.journey.service.TagService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,16 +20,13 @@ import java.util.Map;
 @Controller
 @RequestMapping("/admin/recycle")
 public class RecycleController {
-    @Autowired
-    private ArticleService articleService;
-    @Autowired
-    private CategoryService categoryService;
-    @Autowired
-    private TagService tagService;
-    @Autowired
-    private ArticleInfoConvert articleInfoConvert;
-    @Autowired
-    private FileUpLoadConfig fileUpLoadConfig;
+    private final ArticleService articleService;
+    private final ArticleInfoConvert articleInfoConvert;
+
+    public RecycleController(ArticleService articleService, ArticleInfoConvert articleInfoConvert) {
+        this.articleService = articleService;
+        this.articleInfoConvert = articleInfoConvert;
+    }
 
 
     /**
@@ -51,7 +44,7 @@ public class RecycleController {
         int totalPage = (totalCount + loadCount-1) / loadCount;
 
         List<ArticleInfo> releaseList = articleService.getPageArticleList(ArticleStatusEnum.DELETE.getCode(), pageIndex, loadCount);
-        map.put("releaseList", articleInfoConvert.convertList(releaseList));
+        map.put("recycleList", articleInfoConvert.convertList(releaseList));
 
         //传递总页数
         List<Integer> pageList = Lists.newArrayList();

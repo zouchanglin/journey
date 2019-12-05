@@ -6,11 +6,13 @@ import java.util.Map;
 import org.apache.ibatis.annotations.*;
 
 import edu.xpu.journey.entity.TagInfo;
+import org.springframework.stereotype.Repository;
 
 /**
  * 标签的CRUD
  * @author 长林
  */
+@Repository
 public interface TagInfoMapper {
 
 	/**

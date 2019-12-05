@@ -3,7 +3,6 @@ package edu.xpu.journey.controller;
 import com.alibaba.fastjson.JSONObject;
 import edu.xpu.journey.config.FileUpLoadConfig;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -21,8 +20,11 @@ import java.util.UUID;
 @RequestMapping("/file")
 @Slf4j
 public class FileController {
-    @Autowired
-    private FileUpLoadConfig fileUpLoadConfig;
+    private final FileUpLoadConfig fileUpLoadConfig;
+
+    public FileController(FileUpLoadConfig fileUpLoadConfig) {
+        this.fileUpLoadConfig = fileUpLoadConfig;
+    }
 
     @GetMapping("/fileDownload")
     public ResponseEntity<FileSystemResource> file(@RequestParam("fileUrl") String fileName) {

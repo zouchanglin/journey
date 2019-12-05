@@ -4,15 +4,17 @@ import edu.xpu.journey.dao.DiscussInfoRepository;
 import edu.xpu.journey.entity.mapper.ArticleInfoMapper;
 import edu.xpu.journey.enums.ArticleStatusEnum;
 import edu.xpu.journey.service.CountService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CountServiceImpl implements CountService {
-    @Autowired
-    private ArticleInfoMapper articleInfoMapper;
-    @Autowired
-    private DiscussInfoRepository discussInfoRepository;
+    private final ArticleInfoMapper articleInfoMapper;
+    private final DiscussInfoRepository discussInfoRepository;
+
+    public CountServiceImpl(DiscussInfoRepository discussInfoRepository, ArticleInfoMapper articleInfoMapper) {
+        this.discussInfoRepository = discussInfoRepository;
+        this.articleInfoMapper = articleInfoMapper;
+    }
 
     @Override
     public int getArticleCount() {

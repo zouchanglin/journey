@@ -9,33 +9,34 @@ import edu.xpu.journey.form.ArticleFrom;
 import edu.xpu.journey.service.ArticleService;
 import edu.xpu.journey.service.CategoryService;
 import edu.xpu.journey.service.TagService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 @Controller
 @RequestMapping("/admin/article")
 public class ArticleController {
-    @Autowired
-    private ArticleService articleService;
-    @Autowired
-    private CategoryService categoryService;
-    @Autowired
-    private TagService tagService;
-    @Autowired
-    private ArticleInfoConvert articleInfoConvert;
-    @Autowired
-    private FileUpLoadConfig fileUpLoadConfig;
+    private final ArticleService articleService;
+    private final CategoryService categoryService;
+    private final TagService tagService;
+    private final ArticleInfoConvert articleInfoConvert;
+    private final FileUpLoadConfig fileUpLoadConfig;
+
+    public ArticleController(ArticleService articleService, CategoryService categoryService, TagService tagService, ArticleInfoConvert articleInfoConvert, FileUpLoadConfig fileUpLoadConfig) {
+        this.articleService = articleService;
+        this.categoryService = categoryService;
+        this.tagService = tagService;
+        this.articleInfoConvert = articleInfoConvert;
+        this.fileUpLoadConfig = fileUpLoadConfig;
+    }
 
 
     //TODO 预览文章
     @GetMapping("/preview/{articleId}")
     public String previewArticle(@PathVariable("articleId") String articleId){
-        return "";
+        return articleId+"";
     }
 
     /**
