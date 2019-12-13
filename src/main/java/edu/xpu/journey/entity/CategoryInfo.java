@@ -1,6 +1,8 @@
 package edu.xpu.journey.entity;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.DynamicUpdate;
 

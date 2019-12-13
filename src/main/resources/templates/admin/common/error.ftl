@@ -1,4 +1,4 @@
-<html>
+<html lang="zh-CN">
 <head>
     <meta charset="utf-8">
     <title>错误提示</title>

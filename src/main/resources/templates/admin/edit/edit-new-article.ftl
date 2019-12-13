@@ -1,4 +1,4 @@
-<html lang="zh">
+<html lang="zh-CN">
 <head>
     <meta charset="utf-8" />
     <title>编辑博客</title>
@@ -47,7 +47,7 @@
         <form name="mdEditorForm" style="padding-top: 0; height: 100%">
             <div id="test-editormd" style="width: 100%; height: 100%">
                 <!-- 如果是修改的话 -->
-                <label for="content"></label><textarea style="display:none;" name="content" id="content"></textarea>
+                <label for="content"></label><textarea style="display:none;" name="content" id="content">[TOC]</textarea>
             </div>
         </form>
     </div>

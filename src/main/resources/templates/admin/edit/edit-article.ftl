@@ -1,4 +1,4 @@
-<html>
+<html lang="zh-CN">
 <head>
     <meta charset="utf-8" />
     <title>编辑博客</title>
@@ -195,7 +195,7 @@
 <script src="/bootstrap/script/jquery-3.4.1.min.js"></script>
 <script src="/bootstrap/script/editormd.min.js"></script>
 <script type="text/javascript">
-    var testEditor;
+    let testEditor;
 
     //初始化Markdown编辑器
     $(function() {
@@ -247,17 +247,17 @@
 
     //发布博客
     function contentRelease(){
-        var buttonList = document.getElementById('selectedTag').getElementsByTagName('button');
-        var tagString = '';
-        for (var i = 0; i < buttonList.length; i++) {
+        let buttonList = document.getElementById('selectedTag').getElementsByTagName('button');
+        let tagString = '';
+        for (let i = 0; i < buttonList.length; i++) {
             tagString += buttonList[i].getAttribute('id')+' ';
         }
 
-        var id = $("#id").val();
-        var tittle = $("#tittle").val();
-        var content = $("#content").val();
-        var summary = $("#summary").val();
-        var category = $("#category").val();
+        let id = $("#id").val();
+        let tittle = $("#tittle").val();
+        let content = $("#content").val();
+        let summary = $("#summary").val();
+        let category = $("#category").val();
 
         if(summary == null) {
             summary = "仗剑天涯，从你的摘要开始";
@@ -274,24 +274,24 @@
             success:function (data) {
                 window.location.href = data;
             },
-            error:function (data) {
+            error:function () {
                 alert("发布失败");
                 console.log("发布失败");
             }
         });
     }
     function savedRafts(){
-        var buttonList = document.getElementById('selectedTag2').getElementsByTagName('button');
-        var tagString = '';
-        for (var i = 0; i < buttonList.length; i++) {
+        let buttonList = document.getElementById('selectedTag2').getElementsByTagName('button');
+        let tagString = '';
+        for (let i = 0; i < buttonList.length; i++) {
             tagString += buttonList[i].getAttribute('id')+' ';
         }
 
-        var id = $("#id").val();
-        var tittle = $("#tittle").val();
-        var content = $("#content").val();
-        var summary = $("#summary2").val();
-        var category = $("#category2").val();
+        let id = $("#id").val();
+        let tittle = $("#tittle").val();
+        let content = $("#content").val();
+        let summary = $("#summary2").val();
+        let category = $("#category2").val();
 
         if(summary == null) {
             summary = "仗剑天涯，从你的摘要开始";
@@ -317,7 +317,7 @@
 
     //返回首页
     function returnIndex(){
-        var se=confirm('文章未保存, 确定返回首页?');
+        let se=confirm('文章未保存, 确定返回首页?');
         if (se === true)
             window.location.href="/admin/center";
     }

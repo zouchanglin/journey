@@ -1,4 +1,4 @@
-<html>
+<html lang="zh-CN">
 <#include "../common/header.ftl">
 <body>
 <div id="wrapper" class="toggled">
