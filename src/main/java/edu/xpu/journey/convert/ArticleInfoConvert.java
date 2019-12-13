@@ -6,7 +6,7 @@ import edu.xpu.journey.entity.ArticleInfo;
 import edu.xpu.journey.entity.CategoryInfo;
 import edu.xpu.journey.entity.TagInfo;
 import edu.xpu.journey.entity.mapper.TagInfoMapper;
-import edu.xpu.journey.show.ArticleInfoShow;
+import edu.xpu.journey.VO.ArticleInfoVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -16,29 +16,33 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * @author x
+ */
 @Service
 @Slf4j
 public class ArticleInfoConvert {
     private final CategoryInfoRepository categoryRepository;
     private final TagInfoMapper tagInfoMapper;
 
-    public ArticleInfoConvert(CategoryInfoRepository categoryRepository, TagInfoMapper tagInfoMapper) {
+    public ArticleInfoConvert(CategoryInfoRepository categoryRepository,
+                              TagInfoMapper tagInfoMapper) {
         this.categoryRepository = categoryRepository;
         this.tagInfoMapper = tagInfoMapper;
     }
 
 
-    public List<ArticleInfoShow> convertList(List<ArticleInfo> list){
-        List<ArticleInfoShow> ret = Lists.newArrayList();
+    public List<ArticleInfoVO> convertList(List<ArticleInfo> list){
+        List<ArticleInfoVO> ret = Lists.newArrayList();
         for(ArticleInfo articleInfo: list){
             ret.add(articleToStr(articleInfo));
         }
         return ret;
     }
 
-    public ArticleInfoShow articleToStr(ArticleInfo articleInfo){
+    public ArticleInfoVO articleToStr(ArticleInfo articleInfo){
         log.info("[ArticleInfoConvert] articleToStr() articleInfo={}", articleInfo);
-        ArticleInfoShow articleInfoShow = new ArticleInfoShow(articleInfo);
+        ArticleInfoVO articleInfoShow = new ArticleInfoVO(articleInfo);
 
         //时间格式化
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");

@@ -1,12 +1,14 @@
 package edu.xpu.journey.entity;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 文章实体类
  * @author 长林
  */
 @Data
+@Accessors(chain = true)
 public class ArticleInfo {
     private Integer id;
     private String tittle;

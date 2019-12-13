@@ -1,6 +1,7 @@
 package edu.xpu.journey.entity;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @DynamicUpdate
+@Accessors(chain = true)
 public class CategoryInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

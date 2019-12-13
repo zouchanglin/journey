@@ -1,6 +1,7 @@
 package edu.xpu.journey.controller.admin;
 
 import com.google.common.collect.Lists;
+import edu.xpu.journey.VO.ArticleInfoVO;
 import edu.xpu.journey.config.FileUpLoadConfig;
 import edu.xpu.journey.convert.ArticleInfoConvert;
 import edu.xpu.journey.entity.ArticleInfo;
@@ -24,7 +25,11 @@ public class ArticleController {
     private final ArticleInfoConvert articleInfoConvert;
     private final FileUpLoadConfig fileUpLoadConfig;
 
-    public ArticleController(ArticleService articleService, CategoryService categoryService, TagService tagService, ArticleInfoConvert articleInfoConvert, FileUpLoadConfig fileUpLoadConfig) {
+    public ArticleController(ArticleService articleService,
+                             CategoryService categoryService,
+                             TagService tagService,
+                             ArticleInfoConvert articleInfoConvert,
+                             FileUpLoadConfig fileUpLoadConfig) {
         this.articleService = articleService;
         this.categoryService = categoryService;
         this.tagService = tagService;
@@ -39,12 +44,21 @@ public class ArticleController {
         return articleId+"";
     }
 
+    @GetMapping("/new")
+    public String newArticle(Map<String, Object> map){
+        map.put("category", categoryService.getAll());
+        map.put("uncheckedTag", tagService.getAllTags());
+        return "admin/edit/edit-new-article";
+    }
+
+
+
     /**
      * 把文章移入回收站
      * @param articleId 文章编号
      * @return 刷新文章列表
      */
-    @GetMapping("/torecycle/{articleId}")
+    @GetMapping(value = "/torecycle/{articleId}")
     public String articleToRecycle(@PathVariable("articleId") String articleId){
         articleService.articleToRecycle(Integer.parseInt(articleId));
         return "redirect:/admin/article/list";
@@ -74,7 +88,7 @@ public class ArticleController {
         map.put("category", categoryService.getAll());
         map.put("checkedTag", tagService.getArticleTag(articleId));
         map.put("uncheckedTag", tagService.getOtherTags(articleId));
-        return "admin/editArticle";
+        return "admin/edit/edit-article";
     }
 
     /**
@@ -82,26 +96,40 @@ public class ArticleController {
      * @return 博客管理列表
      */
     @GetMapping("/list")
-    public String articleList(@RequestParam(required = false, defaultValue = "0") Integer pageIndex,
+    public String articleList(@RequestParam(required = false, defaultValue = "1") Integer page,
+                              @RequestParam(required = false, defaultValue = "10") Integer size,
+                           @RequestParam(required = false, defaultValue = "RELEASE") String status,
                            Map<String, Object> map){
         //总数
-        int totalCount = articleService.getArticleCountByStatus(ArticleStatusEnum.RELEASE.getCode());
-        //每页加载数
-        int loadCount = 5;
+        int totalCount = 0;
+        List<ArticleInfo> articleList;
+        if("RELEASE".equals(status)){
+            articleList = articleService.getPageArticleList(ArticleStatusEnum.RELEASE.getCode(), page-1, size);
+            totalCount = articleService.getArticleCountByStatus(ArticleStatusEnum.RELEASE.getCode());
+        }else if("DEBUG".equals(status)){
+            articleList = articleService.getPageArticleList(ArticleStatusEnum.DEBUG.getCode(), page-1, size);
+            totalCount = articleService.getArticleCountByStatus(ArticleStatusEnum.DEBUG.getCode());
+        }else{
+            articleList = articleService.getPageArticleList(ArticleStatusEnum.DELETE.getCode(), page-1, size);
+            totalCount = articleService.getArticleCountByStatus(ArticleStatusEnum.DELETE.getCode());
+        }
+
         //总页数
-        int totalPage = (totalCount + loadCount-1) / loadCount;
-
-        List<ArticleInfo> releaseList = articleService.getPageArticleList(ArticleStatusEnum.RELEASE.getCode(), pageIndex, loadCount);
-        map.put("releaseList", articleInfoConvert.convertList(releaseList));
-
+        int totalPage = (totalCount + size - 1) / size;
+        map.put("list", articleInfoConvert.convertList(articleList));
         //传递总页数
-        List<Integer> pageList = Lists.newArrayList();
-        for (int i = 0; i < totalPage; i++) {pageList.add(i);}
-        map.put("totalPage", pageList);
+        map.put("totalPage", totalPage);
         //传递当前页
-        map.put("thisPage", pageIndex);
+        map.put("currentPage", page);
+        map.put("size", size);
 
-        return "admin/articleList";
+        if("RELEASE".equals(status)){
+            return "admin/article/list";
+        }else if("DEBUG".equals(status)){
+            return "admin/article/list-manu";
+        }else{
+            return "admin/article/list-recy";
+        }
     }
 
     /**
@@ -141,8 +169,9 @@ public class ArticleController {
                                   Map<String, Object> map){
         ArticleInfo articleInfo = articleService.getArticleById(articleId);
         map.put("articleInfoStr", articleInfoConvert.articleToStr(articleInfo));
-        map.put("tittle", "《" + articleInfo.getTittle() + "》发布成功");
-        return "admin/articleSuccess";
+        map.put("msg", "《" + articleInfo.getTittle() + "》发布成功  ");
+        map.put("url", "/admin/article/list");
+        return "admin/common/success";
     }
 
     /**
@@ -157,6 +186,34 @@ public class ArticleController {
         ArticleInfo articleInfo = articleService.getArticleById(articleId);
         map.put("articleInfoStr", articleInfoConvert.articleToStr(articleInfo));
         map.put("tittle", "《" + articleInfo.getTittle() + "》保存成功");
-        return "admin/articleSuccess";
+        return "admin/common/success";
+    }
+
+    @GetMapping("/manuscript/release/{article}")
+    public String manuscriptToRelease(@PathVariable("article") Integer article){
+        articleService.releaseArticleByManuscript(article);
+        return "redirect:/admin/article/list?status=DEBUG";
+    }
+
+    @GetMapping("/manuscript/torecycle/{article}")
+    public String manuscriptToRecycle(@PathVariable("article") Integer article){
+        articleService.articleToRecycle(article);
+        return "redirect:/admin/article/list?status=DEBUG";
+    }
+
+    @GetMapping("/recycle/delete/{article}")
+    public String deleteReally(@PathVariable("article") Integer article){
+        articleService.reallyDelete(article);
+        return "redirect:/admin/article/list?status=DELETE";
+    }
+    /**
+     * 回收站到草稿箱
+     * @param article 文章编号
+     * @return 移动结果
+     */
+    @GetMapping("/recycle/tomanuscript/{article}") //localhost:8080/admin/recycle/tomanuscript/1
+    public String toManuscript(@PathVariable("article") Integer article){
+        articleService.articleToManuscript(article);
+        return "redirect:/admin/article/list?status=DELETE";
     }
 }

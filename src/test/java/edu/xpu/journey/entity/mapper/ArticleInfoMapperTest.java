@@ -1,6 +1,7 @@
 package edu.xpu.journey.entity.mapper;
 
 import edu.xpu.journey.entity.ArticleInfo;
+import edu.xpu.journey.enums.ArticleTopEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -57,16 +58,18 @@ public class ArticleInfoMapperTest {
     public void insertArticleInfo(){
         for (int i = 0; i < 60; i++) {
             ArticleInfo articleInfo = new ArticleInfo();
-            articleInfo.setTittle("Tittle"+i);
-            articleInfo.setSummary("Summary"+i);
-            articleInfo.setContent("Content"+i);
-            articleInfo.setCategory(i % 6 + 1);
-            articleInfo.setDiscuss(i);
-            articleInfo.setReading(i);
-            articleInfo.setLove(i);
-            articleInfo.setStatus(i % 2 + 1);
-            articleInfo.setCreatime(System.currentTimeMillis());
-            articleInfo.setUpdatime(System.currentTimeMillis());
+            articleInfo.setTittle("Tittle"+i)
+                    .setSummary("Summary"+i)
+            .setContent("Content"+i)
+            .setCategory(i % 6 + 1)
+            .setDiscuss(i)
+            .setReading(i)
+            .setLove(i)
+            .setStatus(i % 2 + 1)
+            .setCreatime(System.currentTimeMillis())
+            .setUpdatime(System.currentTimeMillis())
+            .setTop(ArticleTopEnum.NO_TOP.getCode());
+            System.out.println(articleInfo);
             int result = mapper.insertArticleInfo(articleInfo);
             assertEquals(1, result);
         }
@@ -77,6 +80,12 @@ public class ArticleInfoMapperTest {
     public void findAllByStatus(){
         List<ArticleInfo> allByStatus = mapper.findAllByStatus(0);
         assertEquals(2, allByStatus.size());
+    }
+
+    @Test
+    public void findNewestArticleIdByUpdatime(){
+        Integer updatime = mapper.findNewestArticleIdByUpdatime();
+        assertEquals(253, updatime);
     }
 
     /**

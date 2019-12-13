@@ -15,6 +15,14 @@ import java.util.List;
  */
 @Repository
 public interface ArticleInfoMapper {
+
+    /**
+     * 获取最新的文章Id
+     * @return Id
+     */
+    @Select("select id from article_info order by updatime DESC limit 1;")
+    Integer findNewestArticleIdByUpdatime();
+
     /**
      * 根据状态获取所有文章
      * @param status 状态参数
@@ -97,13 +105,13 @@ public interface ArticleInfoMapper {
      * @return 保存结果
      */
     @Insert("insert into article_info(tittle, summary, content, reading, " +
-            "love, discuss, status, category, creatime, updatime) values (" +
+            "love, discuss, status, category, creatime, updatime, top) values (" +
             "#{tittle, jdbcType=VARCHAR}, #{summary, jdbcType=VARCHAR}," +
             "#{content, jdbcType=LONGVARCHAR}, " +
             "#{reading, jdbcType=INTEGER}, #{love, jdbcType=INTEGER}," +
             "#{discuss, jdbcType=INTEGER}, #{status, jdbcType=TINYINT}," +
             "#{category, jdbcType=INTEGER}, #{creatime, jdbcType=BIGINT}, " +
-            "#{updatime, jdbcType=BIGINT}, #{top, jdbcType=TINYINT}) ")
+            "#{updatime, jdbcType=BIGINT}, #{top, jdbcType=TINYINT})")
     int insertArticleInfo(ArticleInfo articleInfo);
 
 

@@ -77,25 +77,21 @@ public class ArticleServiceImpl implements ArticleService {
 
         if(findArticleInfo != null){
             //修改已有文章并发布
-            saveArticleInfo.setId(article);
-            saveArticleInfo.setLove(findArticleInfo.getLove());
-            saveArticleInfo.setReading(findArticleInfo.getLove());
-            saveArticleInfo.setDiscuss(findArticleInfo.getDiscuss());
-            saveArticleInfo.setCreatime(findArticleInfo.getCreatime());
-            saveArticleInfo.setTop(findArticleInfo.getTop());
+            saveArticleInfo.setId(article).setLove(findArticleInfo.getLove())
+            .setReading(findArticleInfo.getLove()).setDiscuss(findArticleInfo.getDiscuss())
+            .setCreatime(findArticleInfo.getCreatime()).setTop(findArticleInfo.getTop());
             saveResult = articleInfoMapper.updateArticleInfoByObject(saveArticleInfo);
         }else{
             //直接写的新文章发布
-            saveArticleInfo.setLove(0);
-            saveArticleInfo.setReading(0);
-            saveArticleInfo.setDiscuss(0);
-            saveArticleInfo.setTop(ArticleTopEnum.NO_TOP.getCode());
-            saveArticleInfo.setCreatime(System.currentTimeMillis());
+            saveArticleInfo.setLove(0).setReading(0).setDiscuss(0)
+            .setTop(ArticleTopEnum.NO_TOP.getCode())
+            .setCreatime(System.currentTimeMillis());
             saveResult = articleInfoMapper.insertArticleInfo(saveArticleInfo);
         }
         log.info("[ArticleServiceImpl] releaseArticle() saveResult={}", saveResult);
-
-        return saveResult == 1 ? saveArticleInfo:null;
+        ArticleInfo savedArticleInfo = articleInfoMapper.findOneById(articleInfoMapper.findNewestArticleIdByUpdatime());
+        log.info("[ArticleServiceImpl] releaseArticle() savedArticleInfo={}", savedArticleInfo);
+        return saveResult == 1 ? savedArticleInfo:null;
     }
 
     @Override
