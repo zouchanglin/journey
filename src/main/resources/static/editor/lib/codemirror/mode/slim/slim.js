@@ -136,7 +136,6 @@
     }
 
     function rubyInQuote(endQuote, tokenize) {
-      // TODO: add multi line support
       return function(stream, state) {
         var ch = stream.peek();
         if (ch == endQuote && state.rubyState.tokenize.length == 1) {

@@ -4,10 +4,11 @@
 <div id="wrapper" class="toggled">
     <#--边栏sidebar-->
     <#include "../common/nav.ftl">
-    <div id="page-content-wrapper">
+    <div id="page-content-wrapper" style="padding-top: 10px">
         <div class="container-fluid">
             <div class="row clearfix">
                 <div class="col-md-12 column">
+                    <#include "nav-header.ftl">
                     <ul class="nav nav-tabs">
                         <li>
                             <a href="/admin/article/list?status=RELEASE">已发布</a>
@@ -56,7 +57,7 @@
                         <#if currentPage lte 1>
                             <li class="disabled"><a href="#">上一页</a></li>
                         <#else>
-                            <li><a href="/admin/article/list?page=${currentPage - 1}&size=${size}">上一页</a></li>
+                            <li><a href="/admin/article/list?status=DELETE&page=${currentPage - 1}&size=${size}">上一页</a></li>
                         </#if>
 
                         <#list 1..totalPage as index>
@@ -64,16 +65,15 @@
                                 <li class="disabled"><a href="#">${index}</a></li>
                             <#else>
                                  <#if index != 0>
-                                <li><a href="/admin/article/list?page=${index}&size=${size}">${index}</a></li></#if>
+                                <li><a href="/admin/article/list?status=DELETE&page=${index}&size=${size}">${index}</a></li></#if>
                             </#if>
                         </#list>
 
                         <#if currentPage gte totalPage>
                             <li class="disabled"><a href="#">下一页</a></li>
                         <#else>
-                            <li><a href="/admin/article/list?page=${currentPage + 1}&size=${size}">下一页</a></li>
+                            <li><a href="/admin/article/list?status=DELETE&page=${currentPage + 1}&size=${size}">下一页</a></li>
                         </#if>
-                    </ul>
                     </ul>
                 </div>
             </div>

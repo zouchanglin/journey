@@ -1,5 +1,6 @@
 package edu.xpu.journey.service.impl;
 
+import com.google.common.collect.Lists;
 import edu.xpu.journey.entity.ArticleInfo;
 import edu.xpu.journey.entity.TagInfo;
 import edu.xpu.journey.entity.mapper.ArticleInfoMapper;
@@ -23,6 +24,16 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
+    public List<ArticleInfo> getAllArticleForTag(Integer tag) {
+        List<Integer> articleIdList = tagInfoMapper.getAllArticlesForTag(tag);
+        List<ArticleInfo> articleInfoList = Lists.newArrayListWithCapacity(articleIdList.size());
+        for(Integer articleId: articleIdList){
+            articleInfoList.add(articleInfoMapper.findOneById(articleId));
+        }
+        return articleInfoList;
+    }
+
+    @Override
     public List<TagInfo> getArticleTag(Integer article) {
         return tagInfoMapper.findArticleTags(article);
     }
@@ -34,13 +45,6 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public List<TagInfo> getOtherTags(Integer article) {
-        //原来的查找方式
-        // HashSet<TagInfo> h1 = new HashSet<>(tagInfoMapper.getAllTags());
-        // HashSet<TagInfo> h2 = new HashSet<>(tagInfoMapper.findArticleTags(article));
-        // h1.removeAll(h2);
-        // List<TagInfo> surplus = Lists.newArrayList();
-        // surplus.addAll(h1);
-        // return surplus;
         return tagInfoMapper.getAllTagsExcludeArticle(article);
     }
 
@@ -49,13 +53,11 @@ public class TagServiceImpl implements TagService {
         ArticleInfo findResult = articleInfoMapper.findOneById(article);
         if(findResult != null){
             String[] tagsArray = tags.split(" ");
-
             //清空一篇文章的标签
             List<Integer> articleTagPlus = tagInfoMapper.findArticleTagPlus(article);
             for(Integer i:articleTagPlus){
                 tagInfoMapper.deleteArticleTag(i);
             }
-
             try{
                 //添加所有标签
                 for (String tagId : tagsArray) {
@@ -65,5 +67,21 @@ public class TagServiceImpl implements TagService {
                 //
             }
         }
+    }
+
+    @Override
+    public void addNewTag(String tagName) {
+        tagInfoMapper.insertByObject(new TagInfo().setName(tagName).setAmount(0));
+    }
+
+    @Override
+    public void updateTag(Integer tagId, String tagName) {
+        int updateResult = tagInfoMapper.updateTagInfoById(tagId, tagName);
+        assert updateResult == 1;
+    }
+
+    @Override
+    public void deleteTagById(Integer tagId) {
+        tagInfoMapper.deleteTagInfo(tagId);
     }
 }

@@ -126,4 +126,10 @@ public interface ArticleInfoMapper {
 
     @Select("select SUM(love) from article_info where status = #{status}")
     Integer countArticleLoveByStatus(Integer status);
+
+    @Update("update article_info set category=1 where category= #{category};")
+    void changeCategoryToDefault(Integer category);
+
+    @Select("select * from article_info")
+    List<ArticleInfo> findAll();
 }

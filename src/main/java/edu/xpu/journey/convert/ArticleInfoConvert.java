@@ -14,7 +14,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * @author x
@@ -56,7 +55,12 @@ public class ArticleInfoConvert {
 
         //查询标签字符串
         List<TagInfo> articleTags = tagInfoMapper.findArticleTags(articleInfo.getId());
-        List<String> tagNames=articleTags.stream().map(TagInfo::getName).collect(Collectors.toList());
+        List<String> tagNames = Lists.newArrayList();
+        if(articleTags.size() > 0 && articleTags.get(0)!=null){
+            for(TagInfo tagInfo: articleTags){
+                tagNames.add(tagInfo.getName());
+            }
+        }
         articleInfoShow.setTagArrayStr(tagNames);
         log.info("[ArticleInfoConvert] articleToStr() articleInfoShow={}", articleInfoShow);
         return articleInfoShow;

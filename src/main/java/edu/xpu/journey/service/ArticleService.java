@@ -73,4 +73,5 @@ public interface ArticleService {
      * @param article 文章编号
      */
     void releaseArticleByManuscript(Integer article);
+
 }

@@ -8,32 +8,27 @@
         <div class="container-fluid">
             <div class="row clearfix">
                 <div class="col-md-12 column">
-                    <#--边栏sidebar-->
                     <#include "nav-header.ftl">
                     <table class="table table-bordered table-condensed">
                         <thead>
                         <tr>
                             <th>编号</th>
-                            <th>分类名称</th>
-                            <th>分类描述</th>
+                            <th>标签名称</th>
                             <th>文章统计</th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                        <#list list as category>
+                        <#list allTags as tag>
                             <tr>
-                                <td>${category.id}</td>
-                                <td>${category.myname}</td>
-                                <td>${category.describes}</td>
-                                <td>${category.amount}</td>
+                                <td>${tag.id}</td>
                                 <td>
-                                    <a href="/admin/category/view/update/${category.id}" class="btn btn-success btn-sm">修改</a>
-                                    <#if category.id == 1>
-                                        <a class="btn btn-danger btn-sm disabled">删除</a>
-                                    <#else>
-                                        <a href="/admin/category/delete/${category.id}" class="btn btn-danger btn-sm">删除</a>
-                                    </#if>
+                                    <input id="${tag.id}" class="form-control" value="${tag.name}" name="myname" type="text"/>
+                                </td>
+                                <td>${tag.amount}</td>
+                                <td>
+                                    <a onclick="update(${tag.id})" class="btn btn-success btn-sm">修改</a>
+                                    <a href="/admin/tag/delete/${tag.id}" class="btn btn-danger btn-sm">删除</a>
                                 </td>
                             </tr>
                         </#list>
@@ -44,6 +39,12 @@
         </div>
     </div>
 </div>
+<script>
+    function update(myId) {
+        let tagName = document.getElementById(myId).value;
+        location.href = '/admin/tag/update?tagId='+myId+'&tagName=' + tagName;
+    }
+</script>
 
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>

@@ -74,7 +74,6 @@
     this.total = scrollSize;
     this.size = barSize;
 
-    // FIXME clip to min size?
     this.inner.style[this.orientation == "horizontal" ? "width" : "height"] =
       this.screen * (this.size / this.total) + "px";
     this.inner.style[this.orientation == "horizontal" ? "left" : "top"] =

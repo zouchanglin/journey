@@ -1,7 +1,5 @@
 package edu.xpu.journey.controller.admin;
 
-import com.google.common.collect.Lists;
-import edu.xpu.journey.VO.ArticleInfoVO;
 import edu.xpu.journey.config.FileUpLoadConfig;
 import edu.xpu.journey.convert.ArticleInfoConvert;
 import edu.xpu.journey.entity.ArticleInfo;
@@ -16,6 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author x
+ */
 @Controller
 @RequestMapping("/admin/article")
 public class ArticleController {
@@ -50,8 +51,6 @@ public class ArticleController {
         map.put("uncheckedTag", tagService.getAllTags());
         return "admin/edit/edit-new-article";
     }
-
-
 
     /**
      * 把文章移入回收站

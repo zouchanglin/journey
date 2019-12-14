@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<div class="container">
+<div class="container" style="padding-top: 10px">
     <div class="row clearfix">
         <div class="col-md-12 column">
             <div class="alert alert-dismissable alert-success">
@@ -22,7 +22,7 @@
 </body>
 
 <script>
-    setTimeout('location.href="${url}"', 3000);
+    setTimeout('location.href="${url}"', 2000);
 </script>
 
 </html>

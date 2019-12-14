@@ -5,8 +5,7 @@
     <link href="https://cdn.bootcss.com/bootstrap/3.0.1/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-
-<div class="container">
+<div style="padding-top: 10px" class="container">
     <div class="row clearfix">
         <div class="col-md-12 column">
             <div class="alert alert-dismissable alert-danger">

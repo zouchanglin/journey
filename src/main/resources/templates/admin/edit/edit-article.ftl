@@ -12,7 +12,7 @@
     <script src="/bootstrap/js/bootstrap.min.js"></script>
     <script>
         function checkLeave(){
-            //event.returnValue="确定离开当前页面吗？";
+            event.returnValue="确定离开当前页面吗？";
         }
     </script>
 </head>

@@ -4,10 +4,11 @@
 <div id="wrapper" class="toggled">
     <#--边栏sidebar-->
     <#include "../common/nav.ftl">
-    <div id="page-content-wrapper">
+    <div id="page-content-wrapper" style="padding-top: 10px">
         <div class="container-fluid">
             <div class="row clearfix">
                 <div class="col-md-12 column">
+                    <#include "nav-header.ftl">
                     <ul class="nav nav-tabs">
                         <li class="active">
                             <a href="/admin/article/list?status=RELEASE">已发布</a>

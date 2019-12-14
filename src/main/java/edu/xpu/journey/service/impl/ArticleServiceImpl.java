@@ -1,5 +1,7 @@
 package edu.xpu.journey.service.impl;
 
+import edu.xpu.journey.elasticsearch.repository.EsArticleInfoRepository;
+import edu.xpu.journey.elasticsearch.service.EsArticleSearchService;
 import edu.xpu.journey.entity.ArticleInfo;
 import edu.xpu.journey.entity.mapper.ArticleInfoMapper;
 import edu.xpu.journey.enums.ArticleStatusEnum;
@@ -9,6 +11,7 @@ import edu.xpu.journey.service.ArticleService;
 import edu.xpu.journey.service.TagService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +27,8 @@ public class ArticleServiceImpl implements ArticleService {
 
     private final ArticleInfoMapper articleInfoMapper;
     private final TagService tagService;
+    @Autowired
+    private EsArticleInfoRepository esArticleInfoRepository;
 
     public ArticleServiceImpl(ArticleInfoMapper articleInfoMapper, TagService tagService) {
         this.articleInfoMapper = articleInfoMapper;
@@ -90,6 +95,7 @@ public class ArticleServiceImpl implements ArticleService {
         }
         log.info("[ArticleServiceImpl] releaseArticle() saveResult={}", saveResult);
         ArticleInfo savedArticleInfo = articleInfoMapper.findOneById(articleInfoMapper.findNewestArticleIdByUpdatime());
+        esArticleInfoRepository.save(savedArticleInfo);
         log.info("[ArticleServiceImpl] releaseArticle() savedArticleInfo={}", savedArticleInfo);
         return saveResult == 1 ? savedArticleInfo:null;
     }
