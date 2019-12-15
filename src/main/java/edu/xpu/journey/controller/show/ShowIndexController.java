@@ -49,7 +49,6 @@ public class ShowIndexController {
         System.out.println(articleInfoVOList);
         //分页
         Integer totalCount = articleService.getArticleCountByStatus(ArticleStatusEnum.RELEASE.getCode());
-
         //计算分页参数
         int totalPage = (totalCount + size - 1) / size;
         //传递分页参数
