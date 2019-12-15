@@ -1,5 +1,7 @@
 package edu.xpu.journey.service;
 
+import edu.xpu.journey.vo.SideBarVO;
+
 /**
  * 用来统计各种信息的接口
  * @author 长林
@@ -36,4 +38,11 @@ public interface CountService {
      * @return 评论量
      */
     int getDiscussCount();
+
+
+    /**
+     * 获取侧边栏的打包数据
+     * @return 数据包
+     */
+    SideBarVO getCountDataPackage();
 }

@@ -1,4 +1,4 @@
-package edu.xpu.journey.VO;
+package edu.xpu.journey.vo;
 
 import edu.xpu.journey.entity.ArticleInfo;
 import lombok.Data;

@@ -1,13 +1,12 @@
 <section class="nexmoe-posts" id="brand-waterfall">
-<#--    <#list articles as article>-->
+    <#list articles as article>
         <div class="nexmoe-post">
-            <a href="servePath}{article.articlePermalink}" title="{article.articleTitle} - {blogTitle}">
+            <a href="" title="${article.}">
                 <div class="nexmoe-post-cover mdui-ripple">
-<#--                    <#if article.articlePutTop>-->
-<#--                        <i class="top iconfont solo-top"></i>-->
-<#--                    </#if>-->
-                    <i class="top iconfont solo-top"></i>
-                    <img src="https://img.hacpai.com/bing/20190303.jpg?imageView2/1/w/960/h/540/interlace/1/q/100" alt="{article.articleTitle}"
+                    <#if article.articlePutTop == 0>
+                        <i class="top iconfont solo-top"></i>
+                    </#if>
+                    <img src="https://img.hacpai.com/bing/20190303.jpg?imageView2/1/w/960/h/540/interlace/1/q/100" alt="${article.}"
                          data-src="/images/5c3aec85a4343.jpg" class="ls-is-cached lazyloaded index-img"
                          referrerpolicy="no-referrer">
                     <h1>{article.articleTitle}</h1>
@@ -46,7 +45,7 @@
                 <p class="summary">{article.articleAbstractText}</p>
             </article>
         </div>
-<#--    </#list>-->
+    </#list>
 </section>
 
 <#--<#if 1 < paginationPageCount >-->

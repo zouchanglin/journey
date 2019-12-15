@@ -3,25 +3,25 @@
 
 <div class="nexmoe-drawer mdui-drawer" id="drawer">
     <div class="nexmoe-avatar mdui-ripple">
-        <a href="/" title="${blogTitle}">
+        <a href="/" title="${dataPackage.blogTitle}">
             <img src="https://s2.ax1x.com/2019/10/30/K5S3QO.png" title="myblogTitle" alt="myuserName"></a>
     </div>
     <div class="nexmoe-count">
         <div>
             <span>文章</span>
-            ${articleCount}
+            ${dataPackage.articleCount}
         </div>
         <div>
             <span>评论</span>
-            ${discussCount}
+            ${dataPackage.discussCount}
         </div>
         <div>
             <span>点赞</span>
-            ${loveCount}
+            ${dataPackage.loveCount}
         </div>
         <div>
             <span>浏览</span>
-            ${readingCount}
+            ${dataPackage.readingCount}
         </div>
     </div>
     <div class="list-content">
@@ -96,12 +96,39 @@
                         <path d="M9.062 9.203c0-0.859-0.562-1.422-1.422-1.422-0.844 0-1.703 0.562-1.703 1.422 0 0.844 0.859 1.406 1.703 1.406 0.859 0 1.422-0.562 1.422-1.406zM20.672 17.125c0-0.562-0.562-1.125-1.422-1.125-0.562 0-1.125 0.562-1.125 1.125 0 0.578 0.562 1.141 1.125 1.141 0.859 0 1.422-0.562 1.422-1.141zM16.984 9.203c0-0.859-0.562-1.422-1.406-1.422-0.859 0-1.703 0.562-1.703 1.422 0 0.844 0.844 1.406 1.703 1.406 0.844 0 1.406-0.562 1.406-1.406zM26.906 17.125c0-0.562-0.578-1.125-1.422-1.125-0.562 0-1.125 0.562-1.125 1.125 0 0.578 0.562 1.141 1.125 1.141 0.844 0 1.422-0.562 1.422-1.141zM22.75 10.922c-0.359-0.047-0.719-0.063-1.094-0.063-5.375 0-9.625 4.016-9.625 8.953 0 0.828 0.125 1.625 0.359 2.375-0.359 0.031-0.703 0.047-1.063 0.047-1.422 0-2.547-0.281-3.969-0.562l-3.953 1.984 1.125-3.406c-2.828-1.984-4.531-4.547-4.531-7.656 0-5.391 5.094-9.625 11.328-9.625 5.563 0 10.453 3.391 11.422 7.953zM32 19.687c0 2.547-1.688 4.813-3.969 6.516l0.859 2.828-3.109-1.703c-1.141 0.281-2.281 0.578-3.406 0.578-5.391 0-9.625-3.688-9.625-8.219s4.234-8.219 9.625-8.219c5.094 0 9.625 3.688 9.625 8.219z"></path>
                     </svg>
                 </a>
-                <a href="tencent://message/?uin=1576962841" title="1576962841" target="_blank" class="user__site mdui-ripple" rel="noopener nofollow">
+                <a href="tencent://message/?uin=1610984228" title="1610984228" target="_blank" class="user__site mdui-ripple" rel="noopener nofollow">
 
                     <svg t="1574935733271" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="973" width="200" height="200"><path d="M867.7 656.3c-5.6-77.3-57.5-142-87.4-175.5 4.2-9.7 14.3-66.1-24.8-104.6 0.1-0.9 0.1-1.9 0.1-2.7 0-151.8-108-261-243.6-261.5-135.6 0.5-243.6 109.7-243.6 261.5v2.7c-39.1 38.4-28.9 94.8-24.8 104.6-30 33.5-81.8 98.2-87.4 175.5-1 20.3 2.1 49.9 12.1 63 12.1 16 45.3-3.2 69-54.4 6.6 23.7 21.9 59.9 56.3 105.9-57.7 13.1-74.2 70.1-54.8 101.2 13.7 21.9 45 40 99.1 40 96.1 0 138.6-25.8 157.5-43.8 3.9-4 9.4-5.8 16.5-5.9 7.1 0 12.7 1.9 16.5 5.9 18.9 18 61.4 43.8 157.5 43.8 54.1 0 85.4-18 99.1-40 19.4-31.1 3-88-54.7-101.2 34.5-46 49.7-82.2 56.3-105.9 23.7 51.2 56.9 70.5 69 54.4 10-13.1 13.2-42.7 12.1-63z m0 0" p-id="974"></path></svg>
                 </a>
             </div>
         </div>
+
+        <div class="nexmoe-widget-wrap">
+            <h3 class="nexmoe-widget-title">标签</h3>
+            <div class="nexmoe-widget tagcloud">
+                <#list dataPackage.tagInfoList as tag>
+                    <a rel="tag" href="#" title="" class="mdui-ripple">
+                        ${tag.name}</a>
+                </#list>
+            </div>
+        </div>
+
+        <div class="nexmoe-widget-wrap">
+        <h3 class="nexmoe-widget-title">分类</h3>
+        <div class="nexmoe-widget">
+            <ul class="category-list">
+                <#list dataPackage.categoryInfoList as category>
+                    <li class="category-list-item">
+                        <a class="category-list-link mdui-ripple" href="#">
+                            ${category.myname}</a>
+                        <span class="category-list-count">
+                            ${category.amount}</span>
+                    </li>
+                </#list>
+            </ul>
+        </div>
+    </div>
+
 
 <#--        <#if noticeBoard?? && 'bulletin'== customVars.key0>
             <div class="nexmoe-widget-wrap">
@@ -179,10 +206,9 @@
 
     </aside>
     <div class="nexmoe-copyright">
-        © my2019<a href="myhttp://">myblogTitle</a> <br/>
-        myfooterContent <br>
-        Powered by <a href="https://solo.b3log.org" target="_blank">Solo</a> <br>
-        Theme <a rel="friend" href="https://github.com/InkDP/solo-nexmoe" target="_blank">myskinDirName</a>
-        by <a rel="friend" href="https://www.jinjianh.com" target="_blank">InkDP</a>
+        ©2019 ${dataPackage.blogTitle}<br/>
+        <br>
+        Powered by <a href="https://github.com/zouchanglin/journey" target="_blank">Journey</a> <br>
+        Theme by <a rel="friend" href="https://github.com/nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
     </div>
 </div>

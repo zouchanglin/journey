@@ -1,13 +1,13 @@
 package edu.xpu.journey.service.impl;
 
 import edu.xpu.journey.elasticsearch.repository.EsArticleInfoRepository;
-import edu.xpu.journey.elasticsearch.service.EsArticleSearchService;
 import edu.xpu.journey.entity.ArticleInfo;
 import edu.xpu.journey.entity.mapper.ArticleInfoMapper;
 import edu.xpu.journey.enums.ArticleStatusEnum;
 import edu.xpu.journey.enums.ArticleTopEnum;
 import edu.xpu.journey.form.ArticleFrom;
 import edu.xpu.journey.service.ArticleService;
+import edu.xpu.journey.service.CategoryService;
 import edu.xpu.journey.service.TagService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -23,18 +23,17 @@ import java.util.List;
 @Service
 @Slf4j
 public class ArticleServiceImpl implements ArticleService {
+    @Autowired
+    private ArticleInfoMapper articleInfoMapper;
 
+    @Autowired
+    private TagService tagService;
 
-    private final ArticleInfoMapper articleInfoMapper;
-    private final TagService tagService;
+    @Autowired
+    private CategoryService categoryService;
+
     @Autowired
     private EsArticleInfoRepository esArticleInfoRepository;
-
-    public ArticleServiceImpl(ArticleInfoMapper articleInfoMapper, TagService tagService) {
-        this.articleInfoMapper = articleInfoMapper;
-        this.tagService = tagService;
-    }
-
 
     @Override
     public ArticleInfo getArticleById(Integer articleId) {
@@ -67,6 +66,12 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public void articleToRecycle(Integer articleId) {
         int updateResult = articleInfoMapper.updateArticleStatus(ArticleStatusEnum.DELETE.getCode(), articleId);
+        //分类文章数量-1
+        if(updateResult == 1){
+            ArticleInfo oneById = articleInfoMapper.findOneById(articleId);
+            //该分类下的数量减一
+            //categoryService.subCountOne(oneById.getCategory());
+        }
         log.info("[ArticleServiceImpl] articleToRecycle updateResult={}", updateResult);
     }
 
@@ -86,6 +91,7 @@ public class ArticleServiceImpl implements ArticleService {
             .setReading(findArticleInfo.getLove()).setDiscuss(findArticleInfo.getDiscuss())
             .setCreatime(findArticleInfo.getCreatime()).setTop(findArticleInfo.getTop());
             saveResult = articleInfoMapper.updateArticleInfoByObject(saveArticleInfo);
+            categoryService.flushArticleCount(findArticleInfo.getCategory());
         }else{
             //直接写的新文章发布
             saveArticleInfo.setLove(0).setReading(0).setDiscuss(0)
@@ -97,12 +103,16 @@ public class ArticleServiceImpl implements ArticleService {
         ArticleInfo savedArticleInfo = articleInfoMapper.findOneById(articleInfoMapper.findNewestArticleIdByUpdatime());
         esArticleInfoRepository.save(savedArticleInfo);
         log.info("[ArticleServiceImpl] releaseArticle() savedArticleInfo={}", savedArticleInfo);
+
+        categoryService.flushArticleCount(savedArticleInfo.getCategory());
         return saveResult == 1 ? savedArticleInfo:null;
     }
 
     @Override
     public void articleToManuscript(Integer articleId) {
+        ArticleInfo oldInfo = articleInfoMapper.findOneById(articleId);
         int updateResult = articleInfoMapper.updateArticleStatus(ArticleStatusEnum.DEBUG.getCode(), articleId);
+        categoryService.flushArticleCount(oldInfo.getCategory());
         log.info("[ArticleServiceImpl] articleToManuscript updateResult={}", updateResult);
     }
 

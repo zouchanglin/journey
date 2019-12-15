@@ -6,7 +6,7 @@ import edu.xpu.journey.entity.ArticleInfo;
 import edu.xpu.journey.entity.CategoryInfo;
 import edu.xpu.journey.entity.TagInfo;
 import edu.xpu.journey.entity.mapper.TagInfoMapper;
-import edu.xpu.journey.VO.ArticleInfoVO;
+import edu.xpu.journey.vo.ArticleInfoVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

@@ -3,8 +3,8 @@ package edu.xpu.journey.service.impl;
 import edu.xpu.journey.dao.CategoryInfoRepository;
 import edu.xpu.journey.entity.CategoryInfo;
 import edu.xpu.journey.entity.mapper.ArticleInfoMapper;
+import edu.xpu.journey.enums.ArticleStatusEnum;
 import edu.xpu.journey.form.CategoryForm;
-import edu.xpu.journey.service.ArticleService;
 import edu.xpu.journey.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,13 +18,10 @@ import java.util.Optional;
  */
 @Service
 public class CategoryServiceImpl implements CategoryService {
-    private final CategoryInfoRepository categoryRepository;
+    @Autowired
+    private CategoryInfoRepository categoryRepository;
     @Autowired
     private ArticleInfoMapper articleInfoMapper;
-
-    public CategoryServiceImpl(CategoryInfoRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
 
     @Override
     public CategoryInfo addNewOne(String categoryName, String categoryDec) {
@@ -57,5 +54,37 @@ public class CategoryServiceImpl implements CategoryService {
             findCategoryInfo.setDescribes(categoryForm.getDescribes());
             categoryRepository.save(findCategoryInfo);
         }
+    }
+
+    @Override
+    public void subCountOne(Integer category) {
+        Optional<CategoryInfo> categoryInfo = categoryRepository.findById(category);
+        if(categoryInfo.isPresent()){
+            CategoryInfo info = categoryInfo.get();
+            info.setAmount(info.getAmount() - 1);
+            categoryRepository.save(info);
+        }
+    }
+
+    @Override
+    public void addCountOne(Integer category) {
+        Optional<CategoryInfo> categoryInfo = categoryRepository.findById(category);
+        if(categoryInfo.isPresent()){
+            CategoryInfo info = categoryInfo.get();
+            info.setAmount(info.getAmount() + 1);
+            categoryRepository.save(info);
+        }
+    }
+
+    @Override
+    public Integer flushArticleCount(Integer category) {
+        Integer newCountValue = articleInfoMapper.countArticleByStatusAndCategory(ArticleStatusEnum.RELEASE.getCode(), category);
+        Optional<CategoryInfo> findResultOpt = categoryRepository.findById(category);
+        if(findResultOpt.isPresent()){
+            CategoryInfo categoryInfo = findResultOpt.get();
+            categoryInfo.setAmount(newCountValue);
+            categoryRepository.save(categoryInfo);
+        }
+        return newCountValue;
     }
 }

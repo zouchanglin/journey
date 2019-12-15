@@ -16,6 +16,7 @@ import java.io.Serializable;
 @Document(indexName = "article", type = "article")
 public class ArticleInfo implements Serializable {
     private static final long serialVersionUID = 2404819559774004630L;
+
     @Id
     private Integer id;
     private String tittle;

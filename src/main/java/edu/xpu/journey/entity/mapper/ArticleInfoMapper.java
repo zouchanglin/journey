@@ -18,6 +18,7 @@ public interface ArticleInfoMapper {
 
     /**
      * 获取最新的文章Id
+     *
      * @return Id
      */
     @Select("select id from article_info order by updatime DESC limit 1;")
@@ -25,6 +26,7 @@ public interface ArticleInfoMapper {
 
     /**
      * 根据状态获取所有文章
+     *
      * @param status 状态参数
      * @return 文章列表
      */
@@ -33,6 +35,7 @@ public interface ArticleInfoMapper {
 
     /**
      * 根据文章编号查找文章
+     *
      * @param id 文章编号
      * @return 文章对象
      */
@@ -41,6 +44,7 @@ public interface ArticleInfoMapper {
 
     /**
      * 根据状态分页查询
+     *
      * @param status 文章的状态
      * @param start 起始位置
      * @param pageSize  页容量
@@ -51,6 +55,7 @@ public interface ArticleInfoMapper {
 
     /**
      * 删除一篇文章
+     *
      * @param id 文章id
      * @return 删除结果
      */
@@ -59,6 +64,7 @@ public interface ArticleInfoMapper {
 
     /**
      * 修改文章
+     *
      * @param articleInfo 文章实体对象
      * @return 修改结果
      */
@@ -74,6 +80,7 @@ public interface ArticleInfoMapper {
 
     /**
      * 修改阅读量（经常修改）
+     *
      * @param reading 阅读统计
      * @param id 文章编号
      * @return 修改结果
@@ -83,6 +90,7 @@ public interface ArticleInfoMapper {
 
     /**
      * 修改是否置顶
+     *
      * @param top 0 置顶、1不置顶
      * @param id 文章编号
      * @return 更改结果
@@ -92,6 +100,7 @@ public interface ArticleInfoMapper {
 
     /**
      * 更改文章状态
+     *
      * @param status 目标状态
      * @param id 文章编号
      * @return 更改结果
@@ -101,6 +110,7 @@ public interface ArticleInfoMapper {
 
     /**
      * 插入一篇文章
+     *
      * @param articleInfo 文章对象
      * @return 保存结果
      */
@@ -132,4 +142,7 @@ public interface ArticleInfoMapper {
 
     @Select("select * from article_info")
     List<ArticleInfo> findAll();
+
+    @Select("select count(id) from article_info where status=#{status} and category=#{category}")
+    Integer countArticleByStatusAndCategory(Integer status, Integer category);
 }

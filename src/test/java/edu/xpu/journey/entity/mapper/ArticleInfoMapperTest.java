@@ -56,7 +56,7 @@ public class ArticleInfoMapperTest {
 
     @Test
     public void insertArticleInfo(){
-        for (int i = 0; i < 60; i++) {
+        for (int i = 0; i < 20; i++) {
             ArticleInfo articleInfo = new ArticleInfo();
             articleInfo.setTittle("Tittle"+i)
                     .setSummary("Summary"+i)

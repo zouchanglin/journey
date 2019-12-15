@@ -42,4 +42,22 @@ public interface CategoryService {
      * @param categoryForm 分类信息表单
      */
     void updateCategory(CategoryForm categoryForm);
+
+    /**
+     * 该分类下的文章数量减一
+     * @param category 分类编号
+     */
+    void subCountOne(Integer category);
+
+    /**
+     * 该分类下的文章数量加一
+     * @param category 分类编号
+     */
+    void addCountOne(Integer category);
+
+    /**
+     * 刷新文章数量统计
+     * @return 返回该分类下的新统计值
+     */
+    Integer flushArticleCount(Integer category);
 }

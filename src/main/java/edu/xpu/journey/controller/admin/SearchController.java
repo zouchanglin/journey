@@ -1,6 +1,6 @@
 package edu.xpu.journey.controller.admin;
 
-import edu.xpu.journey.VO.ArticleInfoVO;
+import edu.xpu.journey.vo.ArticleInfoVO;
 import edu.xpu.journey.convert.ArticleInfoConvert;
 import edu.xpu.journey.elasticsearch.service.EsArticleSearchService;
 import edu.xpu.journey.entity.ArticleInfo;
