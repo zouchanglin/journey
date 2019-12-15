@@ -176,39 +176,27 @@
 <#--        </#if>-->
 
 
-<#--        <#if 0 != archiveDates?size>-->
-<#--            <div class="nexmoe-widget-wrap">-->
-<#--                <h3 class="nexmoe-widget-title">${archiveLabel}</h3>-->
-<#--                <div class="nexmoe-widget">-->
-<#--                    <ul class="category-list">-->
-<#--                        <#list archiveDates as archiveDate>-->
-<#--                            <#if archiveDate_index < 10>-->
-<#--                                <li class="category-list-item">-->
-<#--                                    <#if "en" == localeString?substring(0, 2)>-->
-<#--                                        <a class="category-list-link mdui-ripple"-->
-<#--                                           href="myserverPath/archives/${archiveDate.archiveDateYear}/${archiveDate.archiveDateMonth}"-->
-<#--                                           title="${archiveDate.archiveDateYear} ${yearLabel} ${archiveDate.archiveDateMonth} ${monthLabel} ${archiveLabel} - myblogTittle">-->
-<#--                                            ${archiveDate.monthName} ${archiveDate.archiveDateYear}</a><span-->
-<#--                                            class="category-list-count">${archiveDate.archiveDatePublishedArticleCount}</span>-->
-<#--                                    <#else>-->
-<#--                                        <a href="myserverPath/archives/${archiveDate.archiveDateYear}/${archiveDate.archiveDateMonth}"-->
-<#--                                           title="${archiveDate.archiveDateYear} ${yearLabel} ${archiveDate.archiveDateMonth} ${monthLabel} ${archiveLabel} - myblogTittle">-->
-<#--                                            ${archiveDate.archiveDateYear} ${yearLabel} ${archiveDate.archiveDateMonth} ${monthLabel}</a>-->
-<#--                                        <span class="category-list-count">${archiveDate.archiveDatePublishedArticleCount}</span>-->
-<#--                                    </#if>-->
-<#--                                </li>-->
-<#--                            </#if>-->
-<#--                        </#list>-->
-<#--                    </ul>-->
-<#--                </div>-->
-<#--            </div>-->
-<#--        </#if>-->
+        <#if 0 != archiveDatas?size>
+            <div class="nexmoe-widget-wrap">
+                <h3 class="nexmoe-widget-title">归档</h3>
+                <div class="nexmoe-widget">
+                    <ul class="category-list">
+                        <#list archiveDatas as archiveDate>
+                            <li class="category-list-item">
+                                <a class="category-list-link mdui-ripple" href="#">${archiveDate.timeStr}</a>
+                                <span class="category-list-count">${archiveDate.count}</span>
+                            </li>
+                        </#list>
+                    </ul>
+                </div>
+            </div>
+        </#if>
 
     </aside>
     <div class="nexmoe-copyright">
         ©2019 ${dataPackage.blogTitle}<br/>
         <br>
-        Powered by <a href="https://github.com/zouchanglin/journey" target="_blank">Journey</a> <br>
+        Powered by <a href="https://github.com/zouchanglin/journey" target="_blank">Journey</a><br>
         Theme by <a rel="friend" href="https://github.com/nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
     </div>
 </div>

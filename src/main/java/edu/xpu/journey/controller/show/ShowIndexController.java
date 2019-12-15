@@ -3,8 +3,10 @@ package edu.xpu.journey.controller.show;
 import edu.xpu.journey.convert.ArticleInfoConvert;
 import edu.xpu.journey.entity.ArticleInfo;
 import edu.xpu.journey.enums.ArticleStatusEnum;
+import edu.xpu.journey.service.ArchiveService;
 import edu.xpu.journey.service.ArticleService;
 import edu.xpu.journey.service.CountService;
+import edu.xpu.journey.vo.ArchiveVO;
 import edu.xpu.journey.vo.ArticleInfoVO;
 import edu.xpu.journey.vo.SideBarVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,8 @@ public class ShowIndexController {
 
     @Autowired
     private ArticleInfoConvert articleInfoConvert;
+    @Autowired
+    private ArchiveService archiveService;
 
     @GetMapping
     public String getIndex(@RequestParam(defaultValue = "0") Integer page,
@@ -38,6 +42,8 @@ public class ShowIndexController {
         SideBarVO countDataPackage = countService.getCountDataPackage();
         //侧边栏打包数据
         modelMap.addAttribute("dataPackage", countDataPackage);
+
+        List<ArchiveVO> archiveData = archiveService.getArchiveData();
         List<ArticleInfo> pageArticleList = articleService.getPageArticleList(ArticleStatusEnum.RELEASE.getCode(), page, size);
         List<ArticleInfoVO> articleInfoVOList = articleInfoConvert.convertList(pageArticleList);
         System.out.println(articleInfoVOList);
@@ -50,7 +56,7 @@ public class ShowIndexController {
         modelMap.addAttribute("currentPage", page);
         modelMap.addAttribute("size", size);
         modelMap.addAttribute("totalPage", totalPage-1);
-
+        modelMap.addAttribute("archiveDatas", archiveData);
         modelMap.addAttribute("articles", articleInfoVOList);
         return "view/index";
     }

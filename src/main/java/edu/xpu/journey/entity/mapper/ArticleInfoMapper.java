@@ -145,4 +145,7 @@ public interface ArticleInfoMapper {
 
     @Select("select count(id) from article_info where status=#{status} and category=#{category}")
     Integer countArticleByStatusAndCategory(Integer status, Integer category);
+
+    @Select("select * from article_info where status=#{status} order by creatime asc")
+    List<ArticleInfo> findAllByStatusOrderByCreatTime(Integer status);
 }
